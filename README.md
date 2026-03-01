@@ -77,19 +77,21 @@ An elegant, modern personal website navigation management system with **three de
 
 ### 📦 Quick Start
 
-#### Choose Deployment Mode
+#### Choose Your Storage Mode
 
-Select the appropriate deployment mode based on your needs:
+NavGate supports **three storage modes**. Choose based on your needs:
 
-| Feature               | GitHub Pages Mode       | Backend Mode           |
-| --------------------- | ----------------------- | ---------------------- |
-| Cost                  | Free                    | Requires server        |
-| Data Storage          | Browser localStorage    | MySQL Database         |
-| Authentication        | None                    | JWT + bcrypt           |
-| Multi-device Sync     | ❌ Not supported        | ✅ Supported           |
-| Multi-user            | ❌ Not supported        | ✅ Supported           |
-| Deployment Difficulty | Simple                  | Moderate               |
-| Use Case              | Personal use, zero cost | Enterprise, multi-user |
+| Feature           | localStorage | **Gist** ⭐  | Backend      |
+| ----------------- | ------------ | ------------ | ------------ |
+| Setup Time        | 0 min        | **5 min**    | 30+ min      |
+| Cost              | Free         | **Free**     | Server cost  |
+| Cross-device Sync | ❌           | ✅           | ✅           |
+| Version History   | ❌           | ✅           | Depends      |
+| Multi-user        | ❌           | ❌           | ✅           |
+| Recommended For   | Testing      | **Personal** | Team/Company |
+
+📖 **Quick Setup Guide**: [QUICK_START.md](QUICK_START.md)
+📖 **Detailed Comparison**: [DEPLOYMENT_MODES.md](DEPLOYMENT_MODES.md)
 
 ---
 
@@ -400,19 +402,21 @@ If this project helps you, welcome to give it a Star ⭐
 
 ### 📦 快速开始
 
-#### 选择部署模式
+#### 选择存储模式
 
-根据你的需求选择合适的部署模式：
+NavGate 支持**三种存储模式**，根据需求选择：
 
-| 特性       | GitHub Pages 模式    | 后端模式           |
-| ---------- | -------------------- | ------------------ |
-| 成本       | 免费                 | 需要服务器         |
-| 数据存储   | 浏览器 localStorage  | MySQL 数据库       |
-| 认证       | 无                   | JWT + bcrypt       |
-| 多设备同步 | ❌ 不支持            | ✅ 支持            |
-| 多用户     | ❌ 不支持            | ✅ 支持            |
-| 部署难度   | 简单                 | 中等               |
-| 适用场景   | 个人使用、零成本需求 | 企业级、多用户需求 |
+| 特性       | localStorage | **Gist** ⭐  | 后端模式   |
+| ---------- | ------------ | ------------ | ---------- |
+| 设置时间   | 0 分钟       | **5 分钟**   | 30+ 分钟   |
+| 成本       | 免费         | **免费**     | 服务器成本 |
+| 跨设备同步 | ❌           | ✅           | ✅         |
+| 版本历史   | ❌           | ✅           | 取决于实现 |
+| 多用户     | ❌           | ❌           | ✅         |
+| 推荐用途   | 测试         | **个人使用** | 团队/企业  |
+
+📖 **快速设置指南**：[QUICK_START.md](QUICK_START.md)
+📖 **详细对比**：[DEPLOYMENT_MODES.md](DEPLOYMENT_MODES.md)
 
 ---
 

@@ -381,33 +381,35 @@ export async function updateConfig(config: Config): Promise<void> {
 
 // ===== 数据导出/导入 =====
 
-export function exportData(): string {
+export function exportData(): Promise<string> {
   const data = getData()
-  return JSON.stringify(data, null, 2)
+  return Promise.resolve(JSON.stringify(data, null, 2))
 }
 
-export function importData(jsonString: string): void {
-  try {
-    const data = JSON.parse(jsonString)
+export function importData(jsonString: string): Promise<void> {
+  return Promise.resolve().then(() => {
+    try {
+      const data = JSON.parse(jsonString)
 
-    // 验证数据格式
-    if (!data.groups || !Array.isArray(data.groups)) {
-      throw new Error('无效的分组数据')
-    }
-    if (!data.sites || !Array.isArray(data.sites)) {
-      throw new Error('无效的站点数据')
-    }
-    if (!data.config || typeof data.config !== 'object') {
-      throw new Error('无效的配置数据')
-    }
+      // 验证数据格式
+      if (!data.groups || !Array.isArray(data.groups)) {
+        throw new Error('无效的分组数据')
+      }
+      if (!data.sites || !Array.isArray(data.sites)) {
+        throw new Error('无效的站点数据')
+      }
+      if (!data.config || typeof data.config !== 'object') {
+        throw new Error('无效的配置数据')
+      }
 
-    // 保存数据
-    saveData({
-      groups: data.groups,
-      sites: data.sites,
-      config: data.config,
-    })
-  } catch (error) {
-    throw new Error('导入数据失败：' + (error instanceof Error ? error.message : '未知错误'))
-  }
+      // 保存数据
+      saveData({
+        groups: data.groups,
+        sites: data.sites,
+        config: data.config,
+      })
+    } catch (error) {
+      throw new Error('导入数据失败：' + (error instanceof Error ? error.message : '未知错误'))
+    }
+  })
 }

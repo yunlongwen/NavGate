@@ -40,20 +40,30 @@ function App() {
     setDarkMode(!darkMode)
   }
 
-  const handleExport = () => {
-    const jsonData = exportData()
-    const blob = new Blob([jsonData], { type: 'application/json' })
-    const url = URL.createObjectURL(blob)
-    const a = document.createElement('a')
-    a.href = url
-    a.download = `navgate-export-${new Date().toISOString().slice(0, 10)}.json`
-    a.click()
-    URL.revokeObjectURL(url)
+  const handleExport = async () => {
+    try {
+      const jsonData = await exportData()
+      const blob = new Blob([jsonData], { type: 'application/json' })
+      const url = URL.createObjectURL(blob)
+      const a = document.createElement('a')
+      a.href = url
+      a.download = `navgate-export-${new Date().toISOString().slice(0, 10)}.json`
+      a.click()
+      URL.revokeObjectURL(url)
+    } catch (error) {
+      console.error('Failed to export data:', error)
+      alert('导出数据失败')
+    }
   }
 
-  const handleImport = (jsonData: string) => {
-    importData(jsonData)
-    loadData()
+  const handleImport = async (jsonData: string) => {
+    try {
+      await importData(jsonData)
+      await loadData()
+    } catch (error) {
+      console.error('Failed to import data:', error)
+      alert('导入数据失败')
+    }
   }
 
   if (loading) {

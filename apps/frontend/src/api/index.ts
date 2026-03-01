@@ -101,36 +101,29 @@ export const updateConfig = async (config: Config): Promise<void> => {
   return api.updateConfig(config)
 }
 
-// GitHub Pages 模式额外的导出/导入功能
-export const exportData = (): string => {
-  // 这些函数是同步的，需要特殊处理
-  // 由于无法在同步函数中等待异步加载，我们直接从 localStorage 读取
-  if (mode === 'github-pages') {
-    const groups = localStorage.getItem('navgate_groups') || '[]'
-    const sites = localStorage.getItem('navgate_sites') || '[]'
-    const config = localStorage.getItem('navgate_config') || '{}'
-    return JSON.stringify(
-      {
-        groups: JSON.parse(groups),
-        sites: JSON.parse(sites),
-        config: JSON.parse(config),
-      },
-      null,
-      2
-    )
+// 导出/导入功能（支持所有模式）
+export const exportData = async (): Promise<string> => {
+  const api = await apiModule
+
+  // 如果 API 实现有 exportData 方法，使用它
+  if (api.exportData) {
+    return api.exportData()
   }
-  return '{}'
+
+  // 否则，手动获取数据并导出
+  const [groups, sites, config] = await Promise.all([getGroups(), getSites(), getConfig()])
+
+  return JSON.stringify({ groups, sites, config }, null, 2)
 }
 
-export const importData = (jsonString: string): void => {
-  if (mode === 'github-pages') {
-    try {
-      const data = JSON.parse(jsonString)
-      if (data.groups) localStorage.setItem('navgate_groups', JSON.stringify(data.groups))
-      if (data.sites) localStorage.setItem('navgate_sites', JSON.stringify(data.sites))
-      if (data.config) localStorage.setItem('navgate_config', JSON.stringify(data.config))
-    } catch (error) {
-      console.error('Failed to import data:', error)
-    }
+export const importData = async (jsonString: string): Promise<void> => {
+  const api = await apiModule
+
+  // 如果 API 实现有 importData 方法，使用它
+  if (api.importData) {
+    return api.importData(jsonString)
   }
+
+  // 否则，抛出错误（后端模式不支持直接导入）
+  throw new Error('Import not supported in this mode')
 }

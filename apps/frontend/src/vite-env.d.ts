@@ -1,8 +1,10 @@
 /// <reference types="vite/client" />
 
 interface ImportMetaEnv {
-  readonly VITE_DEPLOY_MODE?: string
+  readonly VITE_DEPLOY_MODE?: 'github-pages' | 'gist' | 'backend'
   readonly VITE_API_BASE_URL?: string
+  readonly VITE_GIST_ID?: string
+  readonly VITE_GITHUB_TOKEN?: string
 }
 
 interface ImportMeta {

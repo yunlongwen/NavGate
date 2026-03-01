@@ -359,9 +359,8 @@ export async function updateConfig(config: Config): Promise<void> {
 
 // ===== 数据导出/导入 =====
 
-export async function exportData(): Promise<string> {
-  const data = await fetchFromGist()
-  return JSON.stringify(data, null, 2)
+export function exportData(): Promise<string> {
+  return fetchFromGist().then(data => JSON.stringify(data, null, 2))
 }
 
 export async function importData(jsonString: string): Promise<void> {
