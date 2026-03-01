@@ -39,7 +39,12 @@ jobs:
       - name: Build
         run: pnpm --filter frontend build
         env:
+          # 选择存储模式：github-pages (localStorage) 或 gist (GitHub Gist)
           VITE_DEPLOY_MODE: github-pages
+          # 如果使用 gist 模式，需要配置以下环境变量：
+          # VITE_DEPLOY_MODE: gist
+          # VITE_GIST_ID: ${{ secrets.VITE_GIST_ID }}
+          # VITE_GITHUB_TOKEN: ${{ secrets.VITE_GITHUB_TOKEN }}
 
       - name: Setup Pages
         uses: actions/configure-pages@v5
