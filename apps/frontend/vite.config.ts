@@ -6,7 +6,10 @@ export default defineConfig(({ mode }) => {
 
   return {
     plugins: [react()],
-    base: env.VITE_DEPLOY_MODE === 'github-pages' ? '/NavGate/' : '/',
+    base:
+      env.VITE_DEPLOY_MODE === 'github-pages' || env.VITE_DEPLOY_MODE === 'gist'
+        ? '/NavGate/'
+        : '/',
     build: {
       outDir: 'dist',
       sourcemap: true,
