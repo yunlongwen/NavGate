@@ -1,3 +1,204 @@
+# NavGate User Guide | NavGate 使用指南
+
+[English](#english) | [中文](#中文)
+
+---
+
+<a name="english"></a>
+
+## English
+
+## 📖 How to Edit Navigation Content
+
+### 🎯 Quick Start
+
+When you first visit NavGate, demo data will be automatically loaded (3 groups, 12 sites). You can freely edit, delete, or add new content.
+
+---
+
+## 📁 Group Management
+
+### ➕ Create New Group
+
+1. Click the **blue floating button (+)** at the bottom right of the page
+2. Fill in the dialog:
+   - **Group Name**: e.g., "AI Tools", "Dev Resources"
+   - **Public Group**: Toggle switch (enabled by default)
+3. Click **Save**
+
+### ✏️ Edit Group
+
+1. Find the group you want to edit
+2. Click the **edit icon (pencil)** on the right side of the group title
+3. Modify the group name or public status
+4. Click **Save**
+
+### 🗑️ Delete Group
+
+1. Find the group you want to delete
+2. Click the **delete icon (trash)** on the right side of the group title
+3. Click **Confirm Delete** in the confirmation dialog
+
+⚠️ **Warning**: Deleting a group will also delete all sites in that group!
+
+---
+
+## 🔗 Site Management
+
+### ➕ Create New Site
+
+**Method 1: Add to specific group**
+
+1. Find the group where you want to add a site
+2. Click the **add icon (+)** on the right side of the group title
+3. Fill in site information (see below)
+4. Click **Save**
+
+**Site Information:**
+
+- **Site Name**: Required, e.g., "Cursor"
+- **Site URL**: Required, full URL, e.g., "https://cursor.sh"
+- **Description**: Optional, brief description of the site
+- **Icon URL**: Optional, leave empty to auto-fetch site icon
+- **Group**: Select which group to add to
+- **Public Site**: Toggle switch (enabled by default)
+
+### ✏️ Edit Site
+
+1. Find the site card you want to edit
+2. Click the **edit icon (pencil)** at the bottom of the card
+3. Modify site information
+4. Click **Save**
+
+### 🗑️ Delete Site
+
+1. Find the site card you want to delete
+2. Click the **delete icon (trash)** at the bottom of the card
+3. Click **Confirm Delete** in the confirmation dialog
+
+### 🔗 Visit Site
+
+**Method 1: Click the card**
+
+- Click anywhere on the site card to open in a new tab
+
+**Method 2: Use external link icon**
+
+- Click the **external link icon (arrow)** at the bottom of the card
+
+---
+
+## 💾 Data Backup & Restore
+
+### 📤 Export Data
+
+1. Click the **Export** button at the top of the page
+2. Browser will automatically download a JSON file
+3. Filename format: `navgate-export-YYYY-MM-DD.json`
+
+### 📥 Import Data
+
+1. Click the **Import** button at the top of the page
+2. Select a previously exported JSON file in the dialog
+3. Click **Import** to confirm
+
+⚠️ **Warning**: Importing will overwrite all current data!
+
+---
+
+## 🎨 Interface Settings
+
+### 🌙 Toggle Dark Mode
+
+Click the **moon/sun icon** at the top of the page to switch between light/dark themes
+
+---
+
+## 💡 Tips
+
+### 1. Quick Add Common Websites
+
+Recommend creating groups by category, for example:
+
+- **AI Dev Tools**: Cursor, GitHub Copilot, V0.dev
+- **AI Model Platforms**: OpenAI, Claude, Hugging Face
+- **Dev Resources**: GitHub, Stack Overflow, MDN
+
+### 2. Icon Fetching
+
+If you don't fill in an icon URL, the system will automatically use Google's favicon service to fetch the site icon.
+
+For custom icons, you can:
+
+- Use the website's favicon URL
+- Upload custom icons to an image hosting service
+
+### 3. Data Storage
+
+- **GitHub Pages Mode**: Data is stored in browser localStorage
+- Data is only saved in the current browser
+- Clearing browser data will lose all navigation content
+- Regular export backups are recommended!
+
+### 4. Multi-Device Sync
+
+To sync data across multiple devices:
+
+1. Export data on device A
+2. Transfer the JSON file to device B
+3. Import data on device B
+
+---
+
+## ❓ FAQ
+
+### Q: Will data be lost?
+
+A: Data is stored in browser localStorage and will persist unless you clear browser data. Regular export backups are recommended.
+
+### Q: How many sites can I add?
+
+A: Theoretically unlimited, but localStorage typically has a 5-10MB capacity limit.
+
+### Q: How to reset to demo data?
+
+A: Clear browser localStorage data and refresh the page to reload demo data.
+
+### Q: Does it support drag-and-drop sorting?
+
+A: Not in the current version, this feature will be added in future releases.
+
+---
+
+## 🚀 Advanced Usage
+
+### Customize Demo Data
+
+If you want to modify the default demo data, edit:
+
+```
+apps/frontend/src/api/local.ts
+```
+
+Find the `DEFAULT_GROUPS` and `DEFAULT_SITES` constants to modify.
+
+---
+
+## 📞 Feedback & Support
+
+For issues or suggestions, please submit an issue on GitHub:
+https://github.com/yunlongwen/NavGate/issues
+
+---
+
+**Enjoy using NavGate! 🎉**
+
+---
+
+<a name="中文"></a>
+
+## 中文
+
 # NavGate 使用指南
 
 ## 📖 如何编辑导航内容
