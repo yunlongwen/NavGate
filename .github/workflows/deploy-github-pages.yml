@@ -39,12 +39,37 @@ jobs:
       - name: Build
         run: pnpm --filter frontend build
         env:
-          # 选择存储模式：github-pages (localStorage) 或 gist (GitHub Gist)
+          # ============================================
+          # 存储模式配置 / Storage Mode Configuration
+          # ============================================
+          #
+          # 选项 1: localStorage 模式（默认）
+          # Option 1: localStorage Mode (Default)
+          # - 数据存储在浏览器 / Data stored in browser
+          # - 无跨设备同步 / No cross-device sync
+          # - 零配置 / Zero configuration
           VITE_DEPLOY_MODE: github-pages
-          # 如果使用 gist 模式，需要配置以下环境变量：
+          #
+          # 选项 2: GitHub Gist 模式（推荐）⭐
+          # Option 2: GitHub Gist Mode (Recommended) ⭐
+          # - 跨设备同步 / Cross-device sync
+          # - 版本历史 / Version history
+          # - 需要配置 GitHub Secrets / Requires GitHub Secrets
+          #
+          # 启用 Gist 模式，取消注释以下 3 行：
+          # To enable Gist mode, uncomment these 3 lines:
+          #
           # VITE_DEPLOY_MODE: gist
           # VITE_GIST_ID: ${{ secrets.VITE_GIST_ID }}
           # VITE_GITHUB_TOKEN: ${{ secrets.VITE_GITHUB_TOKEN }}
+          #
+          # 设置步骤 / Setup Steps:
+          # 1. 创建 GitHub Token (gist 权限) / Create GitHub Token (gist scope)
+          # 2. 创建 Gist 存储数据 / Create Gist for data storage
+          # 3. 在仓库添加 Secrets / Add Secrets to repository:
+          #    - VITE_GIST_ID
+          #    - VITE_GITHUB_TOKEN
+          # 4. 详见 DEPLOYMENT_MODES.md / See DEPLOYMENT_MODES.md for details
 
       - name: Setup Pages
         uses: actions/configure-pages@v5

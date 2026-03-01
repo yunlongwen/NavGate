@@ -133,12 +133,31 @@ For custom icons, you can:
 - Use the website's favicon URL
 - Upload custom icons to an image hosting service
 
-### 3. Data Storage
+### 3. Data Storage Modes
 
-- **GitHub Pages Mode**: Data is stored in browser localStorage
-- Data is only saved in the current browser
-- Clearing browser data will lose all navigation content
-- Regular export backups are recommended!
+NavGate supports two storage modes:
+
+**A. localStorage Mode (Default)**
+
+- Data stored in browser localStorage
+- Data only exists in current browser
+- ⚠️ Clearing browser data loses everything
+- 💡 Regular export backups recommended
+
+**B. GitHub Gist Mode (Recommended)** ⭐
+
+- Data stored in GitHub Gist
+- ✅ Cross-device sync
+- ✅ Version history
+- ✅ Free and reliable
+- 📖 See [DEPLOYMENT_MODES.md](DEPLOYMENT_MODES.md) for setup
+
+**Switch to Gist Mode:**
+
+1. Create GitHub Token with `gist` permission
+2. Create a Gist for data storage
+3. Configure in GitHub repository secrets
+4. Detailed guide: [DEPLOYMENT_MODES.md](DEPLOYMENT_MODES.md)
 
 ### 4. Multi-Device Sync
 
@@ -326,12 +345,31 @@ https://github.com/yunlongwen/NavGate/issues
 - 使用网站的 favicon URL
 - 使用图床服务上传自定义图标
 
-### 3. 数据存储
+### 3. 数据存储模式
 
-- **GitHub Pages 模式**：数据存储在浏览器的 localStorage 中
-- 数据只保存在当前浏览器
-- 清除浏览器数据会丢失所有导航内容
-- 建议定期导出备份！
+NavGate 支持两种存储模式：
+
+**A. localStorage 模式（默认）**
+
+- 数据存储在浏览器 localStorage 中
+- 数据仅存在于当前浏览器
+- ⚠️ 清除浏览器数据会丢失所有内容
+- 💡 建议定期导出备份
+
+**B. GitHub Gist 模式（推荐）** ⭐
+
+- 数据存储在 GitHub Gist 中
+- ✅ 跨设备同步
+- ✅ 版本历史
+- ✅ 免费且可靠
+- 📖 查看 [DEPLOYMENT_MODES.md](DEPLOYMENT_MODES.md) 了解设置
+
+**切换到 Gist 模式：**
+
+1. 创建具有 `gist` 权限的 GitHub Token
+2. 创建用于数据存储的 Gist
+3. 在 GitHub 仓库密钥中配置
+4. 详细指南：[DEPLOYMENT_MODES.md](DEPLOYMENT_MODES.md)
 
 ### 4. 多设备同步
 
@@ -347,7 +385,10 @@ https://github.com/yunlongwen/NavGate/issues
 
 ### Q: 数据会丢失吗？
 
-A: 数据存储在浏览器 localStorage 中，除非清除浏览器数据，否则会一直保留。建议定期导出备份。
+A: 取决于存储模式：
+
+- **localStorage 模式**：数据存储在浏览器中，除非清除浏览器数据，否则会一直保留。建议定期导出备份。
+- **Gist 模式**：数据存储在 GitHub，不会丢失，还有版本历史可以回滚。
 
 ### Q: 可以添加多少个站点？
 

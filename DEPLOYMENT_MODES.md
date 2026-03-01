@@ -8,13 +8,38 @@
 
 ## English
 
-## 📦 Two Deployment Modes
+## 📦 Deployment Modes Overview
 
-NavGate supports two deployment modes with different data storage and management approaches:
+NavGate supports **three deployment modes** with different data storage approaches:
 
-### 🌐 Mode 1: GitHub Pages Mode (Pure Frontend)
+1. **localStorage Mode** - Pure frontend, data in browser (default)
+2. **GitHub Gist Mode** - Pure frontend, data synced via GitHub Gist (recommended)
+3. **Backend Mode** - Full stack with database
 
-**Current Deployment**: This is what you're using now!
+---
+
+## 🎯 Quick Comparison
+
+| Feature              | localStorage | **Gist** ⭐  | Backend      |
+| -------------------- | ------------ | ------------ | ------------ |
+| **Cross-device**     | ❌           | ✅           | ✅           |
+| **Setup Time**       | 0 min        | **5 min**    | 30+ min      |
+| **Cost**             | Free         | **Free**     | Server cost  |
+| **Data Persistence** | Browser only | **GitHub**   | Database     |
+| **Version History**  | ❌           | ✅           | Depends      |
+| **Multi-user**       | ❌           | ❌           | ✅           |
+| **Performance**      | Instant      | ~200-500ms   | Varies       |
+| **Recommended For**  | Testing      | **Personal** | Team/Company |
+
+---
+
+## 📦 Detailed Mode Descriptions
+
+NavGate supports three deployment modes with different data storage and management approaches:
+
+### 🌐 Mode 1: localStorage Mode (Pure Frontend - Default)
+
+**Simple but Limited**: Data stored only in your browser
 
 #### How it Works
 
@@ -36,8 +61,12 @@ localStorage (Browser Storage)
 #### Environment Variable
 
 ```bash
-VITE_DEPLOY_MODE=github-pages
+VITE_DEPLOY_MODE=github-pages  # or leave empty (default)
 ```
+
+#### Quick Setup
+
+No setup needed! Just deploy to GitHub Pages and it works.
 
 #### API Implementation
 
@@ -66,7 +95,144 @@ if (mode === 'github-pages') {
 
 ---
 
-### 🖥️ Mode 2: Backend Mode (Full Stack)
+### ⭐ Mode 2: GitHub Gist Mode (Pure Frontend - Recommended)
+
+**Best of Both Worlds**: Cross-device sync without a backend server!
+
+#### How it Works
+
+```
+User Browser
+    ↓
+React App
+    ↓
+GitHub Gist API
+    ↓
+Your Gist (JSON file)
+```
+
+#### Data Flow
+
+1. **Initial Load**: Frontend fetches data from your GitHub Gist
+2. **Data Storage**: All data stored in a single Gist file (`navgate-data.json`)
+3. **Data Operations**: All CRUD operations update the Gist via GitHub API
+4. **Caching**: 5-second cache to reduce API calls
+
+#### Environment Variables
+
+```bash
+VITE_DEPLOY_MODE=gist
+VITE_GIST_ID=your_gist_id_here
+VITE_GITHUB_TOKEN=ghp_your_token_here
+```
+
+#### Setup Steps (5 minutes)
+
+**Step 1: Create GitHub Personal Access Token**
+
+1. Go to: https://github.com/settings/tokens
+2. Click **"Generate new token (classic)"**
+3. Name: "NavGate Gist Storage"
+4. Scope: Check **`gist`** only
+5. Click **"Generate token"**
+6. Copy the token (starts with `ghp_`)
+
+**Step 2: Create a Gist**
+
+1. Go to: https://gist.github.com/
+2. Click **"Create new gist"**
+3. Filename: `navgate-data.json`
+4. Content:
+
+```json
+{
+  "groups": [],
+  "sites": [],
+  "config": {
+    "SITE_TITLE": "AI Engineer Hub",
+    "SITE_DESCRIPTION": "AI应用工程师的开发导航站"
+  }
+}
+```
+
+5. Click **"Create secret gist"** (recommended)
+6. Copy Gist ID from URL (the hash after your username)
+
+**Step 3: Configure GitHub Secrets**
+
+1. Go to your repo: `Settings` → `Secrets and variables` → `Actions`
+2. Add secrets:
+   - `VITE_GIST_ID`: your gist ID
+   - `VITE_GITHUB_TOKEN`: your token
+
+**Step 4: Update GitHub Actions**
+
+Edit `.github/workflows/deploy-github-pages.yml`:
+
+```yaml
+- name: Build
+  run: pnpm --filter frontend build
+  env:
+    VITE_DEPLOY_MODE: gist
+    VITE_GIST_ID: ${{ secrets.VITE_GIST_ID }}
+    VITE_GITHUB_TOKEN: ${{ secrets.VITE_GITHUB_TOKEN }}
+```
+
+**Step 5: Push and Deploy**
+
+```bash
+git push origin master
+# GitHub Actions will automatically deploy with Gist storage
+```
+
+#### API Implementation
+
+Uses: `apps/frontend/src/api/gist.ts`
+
+```typescript
+// Read from Gist
+const response = await fetch(`https://api.github.com/gists/${GIST_ID}`, {
+  headers: { Authorization: `Bearer ${GITHUB_TOKEN}` },
+})
+const data = JSON.parse(gist.files['navgate-data.json'].content)
+
+// Write to Gist
+await fetch(`https://api.github.com/gists/${GIST_ID}`, {
+  method: 'PATCH',
+  headers: { Authorization: `Bearer ${GITHUB_TOKEN}` },
+  body: JSON.stringify({
+    files: { 'navgate-data.json': { content: JSON.stringify(newData) } },
+  }),
+})
+```
+
+#### Advantages
+
+- ✅ **Cross-device Sync**: Access from any browser
+- ✅ **Free**: No server costs
+- ✅ **Version History**: GitHub keeps all versions
+- ✅ **Reliable**: GitHub's infrastructure
+- ✅ **Simple**: 5-minute setup
+- ✅ **Secure**: Token-based authentication
+
+#### Limitations
+
+- ⚠️ **Network Latency**: ~200-500ms per request
+- ⚠️ **Rate Limits**: 5,000 requests/hour (usually sufficient)
+- ⚠️ **Single User**: No multi-user support
+- ⚠️ **Concurrent Writes**: Last write wins (no conflict resolution)
+
+#### Security Best Practices
+
+1. **Use Secret Gists**: For private data
+2. **Minimal Permissions**: Only grant `gist` scope
+3. **Never Commit Tokens**: Use GitHub Secrets
+4. **Rotate Tokens**: Periodically update
+5. **Revoke if Leaked**: Immediately revoke compromised tokens
+
+---
+
+### 🖥️ Mode 3: Backend Mode (Full Stack)
 
 **For Self-Hosting**: Deploy with your own server and database
 
@@ -268,18 +434,20 @@ Quick steps:
 
 ## 📊 Comparison Table
 
-| Feature              | GitHub Pages Mode | Backend Mode |
-| -------------------- | ----------------- | ------------ |
-| **Cost**             | Free              | Server cost  |
-| **Setup Difficulty** | Easy              | Medium       |
-| **Data Storage**     | localStorage      | MySQL        |
-| **Multi-Device**     | ❌                | ✅           |
-| **Data Sync**        | ❌                | ✅           |
-| **Multi-User**       | ❌                | ✅           |
-| **Authentication**   | ❌                | ✅ JWT       |
-| **Data Backup**      | Manual export     | Database     |
-| **Performance**      | Instant           | Network      |
-| **Privacy**          | 100% local        | Server       |
+| Feature              | localStorage Mode | **Gist Mode** ⭐ | Backend Mode |
+| -------------------- | ----------------- | ---------------- | ------------ |
+| **Cost**             | Free              | **Free**         | Server cost  |
+| **Setup Difficulty** | None              | **5 min**        | Complex      |
+| **Data Storage**     | Browser           | **GitHub Gist**  | MySQL        |
+| **Multi-Device**     | ❌                | ✅               | ✅           |
+| **Data Sync**        | ❌                | ✅               | ✅           |
+| **Multi-User**       | ❌                | ❌               | ✅           |
+| **Authentication**   | ❌                | Token            | ✅ JWT       |
+| **Data Backup**      | Manual export     | **Auto version** | Database     |
+| **Performance**      | Instant           | ~200-500ms       | Network      |
+| **Privacy**          | 100% local        | GitHub           | Server       |
+| **Version History**  | ❌                | ✅               | Depends      |
+| **Rate Limits**      | None              | 5k/hour          | Self-hosted  |
 
 ---
 
@@ -305,21 +473,28 @@ Quick steps:
 
 ## 💡 Recommendations
 
-### Use GitHub Pages Mode If:
+### Use localStorage Mode If:
 
-- ✅ Personal use only
-- ✅ Don't need multi-device sync
-- ✅ Want zero cost
-- ✅ Prefer simplicity
-- ✅ Value privacy
+- ✅ Just testing/trying out
+- ✅ Don't need data sync
+- ✅ Single device usage
+- ✅ Maximum privacy
+
+### Use Gist Mode If: ⭐ **RECOMMENDED**
+
+- ✅ Personal use
+- ✅ Need multi-device sync
+- ✅ Want zero server cost
+- ✅ Value simplicity + sync
+- ✅ Want version history
 
 ### Use Backend Mode If:
 
-- ✅ Need multi-device access
-- ✅ Want to share with others
+- ✅ Team/company use
 - ✅ Need multi-user support
+- ✅ Need custom features
 - ✅ Have server resources
-- ✅ Need data persistence
+- ✅ Need full control
 
 ---
 
@@ -327,13 +502,38 @@ Quick steps:
 
 ## 中文
 
-## 📦 两种部署模式
+## 📦 部署模式概览
 
-NavGate 支持两种部署模式，具有不同的数据存储和管理方式：
+NavGate 支持**三种部署模式**，具有不同的数据存储方式：
 
-### 🌐 模式 1：GitHub Pages 模式（纯前端）
+1. **localStorage 模式** - 纯前端，数据在浏览器（默认）
+2. **GitHub Gist 模式** - 纯前端，通过 GitHub Gist 同步数据（推荐）
+3. **后端模式** - 全栈，使用数据库
 
-**当前部署**：这就是你现在使用的模式！
+---
+
+## 🎯 快速对比
+
+| 功能           | localStorage | **Gist** ⭐  | 后端模式   |
+| -------------- | ------------ | ------------ | ---------- |
+| **跨设备**     | ❌           | ✅           | ✅         |
+| **设置时间**   | 0 分钟       | **5 分钟**   | 30+ 分钟   |
+| **成本**       | 免费         | **免费**     | 服务器成本 |
+| **数据持久化** | 仅浏览器     | **GitHub**   | 数据库     |
+| **版本历史**   | ❌           | ✅           | 取决于实现 |
+| **多用户**     | ❌           | ❌           | ✅         |
+| **性能**       | 即时         | ~200-500ms   | 不定       |
+| **推荐用途**   | 测试         | **个人使用** | 团队/企业  |
+
+---
+
+## 📦 详细模式说明
+
+NavGate 支持三种部署模式，具有不同的数据存储和管理方式：
+
+### 🌐 模式 1：localStorage 模式（纯前端 - 默认）
+
+**简单但有限**：数据仅存储在浏览器中
 
 #### 工作原理
 
@@ -355,8 +555,12 @@ localStorage (浏览器存储)
 #### 环境变量
 
 ```bash
-VITE_DEPLOY_MODE=github-pages
+VITE_DEPLOY_MODE=github-pages  # 或留空（默认）
 ```
+
+#### 快速设置
+
+无需设置！直接部署到 GitHub Pages 即可使用。
 
 #### API 实现
 
@@ -385,7 +589,144 @@ if (mode === 'github-pages') {
 
 ---
 
-### 🖥️ 模式 2：后端模式（全栈）
+### ⭐ 模式 2：GitHub Gist 模式（纯前端 - 推荐）
+
+**两全其美**：无需后端服务器即可跨设备同步！
+
+#### 工作原理
+
+```
+用户浏览器
+    ↓
+React 应用
+    ↓
+GitHub Gist API
+    ↓
+你的 Gist（JSON 文件）
+```
+
+#### 数据流程
+
+1. **初始加载**：前端从你的 GitHub Gist 获取数据
+2. **数据存储**：所有数据存储在单个 Gist 文件（`navgate-data.json`）
+3. **数据操作**：所有 CRUD 操作通过 GitHub API 更新 Gist
+4. **缓存机制**：5 秒缓存以减少 API 调用
+
+#### 环境变量
+
+```bash
+VITE_DEPLOY_MODE=gist
+VITE_GIST_ID=your_gist_id_here
+VITE_GITHUB_TOKEN=ghp_your_token_here
+```
+
+#### 设置步骤（5 分钟）
+
+**步骤 1：创建 GitHub Personal Access Token**
+
+1. 访问：https://github.com/settings/tokens
+2. 点击 **"Generate new token (classic)"**
+3. 名称："NavGate Gist Storage"
+4. 权限：仅勾选 **`gist`**
+5. 点击 **"Generate token"**
+6. 复制 token（以 `ghp_` 开头）
+
+**步骤 2：创建 Gist**
+
+1. 访问：https://gist.github.com/
+2. 点击 **"Create new gist"**
+3. 文件名：`navgate-data.json`
+4. 内容：
+
+```json
+{
+  "groups": [],
+  "sites": [],
+  "config": {
+    "SITE_TITLE": "AI Engineer Hub",
+    "SITE_DESCRIPTION": "AI应用工程师的开发导航站"
+  }
+}
+```
+
+5. 点击 **"Create secret gist"**（推荐）
+6. 从 URL 复制 Gist ID（用户名后的哈希值）
+
+**步骤 3：配置 GitHub Secrets**
+
+1. 进入仓库：`Settings` → `Secrets and variables` → `Actions`
+2. 添加密钥：
+   - `VITE_GIST_ID`：你的 gist ID
+   - `VITE_GITHUB_TOKEN`：你的 token
+
+**步骤 4：更新 GitHub Actions**
+
+编辑 `.github/workflows/deploy-github-pages.yml`：
+
+```yaml
+- name: Build
+  run: pnpm --filter frontend build
+  env:
+    VITE_DEPLOY_MODE: gist
+    VITE_GIST_ID: ${{ secrets.VITE_GIST_ID }}
+    VITE_GITHUB_TOKEN: ${{ secrets.VITE_GITHUB_TOKEN }}
+```
+
+**步骤 5：推送并部署**
+
+```bash
+git push origin master
+# GitHub Actions 将自动使用 Gist 存储部署
+```
+
+#### API 实现
+
+使用：`apps/frontend/src/api/gist.ts`
+
+```typescript
+// 从 Gist 读取
+const response = await fetch(`https://api.github.com/gists/${GIST_ID}`, {
+  headers: { Authorization: `Bearer ${GITHUB_TOKEN}` },
+})
+const data = JSON.parse(gist.files['navgate-data.json'].content)
+
+// 写入 Gist
+await fetch(`https://api.github.com/gists/${GIST_ID}`, {
+  method: 'PATCH',
+  headers: { Authorization: `Bearer ${GITHUB_TOKEN}` },
+  body: JSON.stringify({
+    files: { 'navgate-data.json': { content: JSON.stringify(newData) } },
+  }),
+})
+```
+
+#### 优势
+
+- ✅ **跨设备同步**：从任何浏览器访问
+- ✅ **免费**：无服务器成本
+- ✅ **版本历史**：GitHub 保留所有版本
+- ✅ **可靠**：GitHub 基础设施
+- ✅ **简单**：5 分钟设置
+- ✅ **安全**：基于 Token 的身份验证
+
+#### 限制
+
+- ⚠️ **网络延迟**：每次请求约 200-500ms
+- ⚠️ **速率限制**：5,000 次请求/小时（通常足够）
+- ⚠️ **单用户**：不支持多用户
+- ⚠️ **并发写入**：最后写入获胜（无冲突解决）
+
+#### 安全最佳实践
+
+1. **使用 Secret Gist**：存储私密数据
+2. **最小权限**：只授予 `gist` 权限
+3. **永不提交 Token**：使用 GitHub Secrets
+4. **定期轮换**：定期更新 Token
+5. **泄露立即撤销**：如果 Token 泄露，立即撤销
+
+---
+
+### 🖥️ 模式 3：后端模式（全栈）
 
 **自托管**：使用自己的服务器和数据库部署
 
@@ -624,21 +965,28 @@ git push origin master
 
 ## 💡 建议
 
-### 使用 GitHub Pages 模式，如果：
+### 使用 localStorage 模式，如果：
 
-- ✅ 仅个人使用
-- ✅ 不需要多设备同步
-- ✅ 想要零成本
-- ✅ 偏好简单性
-- ✅ 重视隐私
+- ✅ 仅测试/试用
+- ✅ 不需要数据同步
+- ✅ 单设备使用
+- ✅ 最大化隐私
+
+### 使用 Gist 模式，如果：⭐ **推荐**
+
+- ✅ 个人使用
+- ✅ 需要多设备同步
+- ✅ 想要零服务器成本
+- ✅ 重视简单性 + 同步
+- ✅ 想要版本历史
 
 ### 使用后端模式，如果：
 
-- ✅ 需要多设备访问
-- ✅ 想与他人共享
+- ✅ 团队/企业使用
 - ✅ 需要多用户支持
+- ✅ 需要自定义功能
 - ✅ 有服务器资源
-- ✅ 需要数据持久化
+- ✅ 需要完全控制
 
 ---
 

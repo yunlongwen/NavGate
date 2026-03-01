@@ -8,10 +8,11 @@
 
 ## English
 
-An elegant, modern personal website navigation management system with **dual deployment modes**:
+An elegant, modern personal website navigation management system with **three deployment modes**:
 
-- **GitHub Pages Mode**: Pure frontend, zero cost, data stored in browser
-- **Backend Mode**: Express.js + MySQL, multi-user support with full features
+- **localStorage Mode**: Pure frontend, data in browser (default)
+- **GitHub Gist Mode**: Pure frontend, cross-device sync via Gist ⭐ **Recommended**
+- **Backend Mode**: Full stack with MySQL, multi-user support
 
 ### ✨ Features
 
@@ -24,12 +25,22 @@ An elegant, modern personal website navigation management system with **dual dep
 - 📊 **Group Management** - Flexible group management with public/private settings
 - 💾 **Data Export/Import** - JSON format data backup and restore
 
-#### GitHub Pages Mode
+#### localStorage Mode
 
-- 🚀 **Zero Cost Deployment** - Completely free static hosting
-- 📦 **Client Storage** - Data stored in browser localStorage
-- ⚡ **Fast Access** - No backend latency, direct local data operations
-- 🔒 **Privacy Protection** - Data stays local, not uploaded to server
+- 🚀 **Zero Cost** - Completely free
+- 📦 **Browser Storage** - Data in localStorage
+- ⚡ **Instant** - No network latency
+- 🔒 **Privacy** - Data stays local
+- ⚠️ **Single Device** - No cross-device sync
+
+#### GitHub Gist Mode ⭐ **Recommended**
+
+- 🚀 **Zero Cost** - Free GitHub Gist storage
+- 🔄 **Cross-device Sync** - Access from any browser
+- 📚 **Version History** - Automatic version control
+- ⚡ **Fast Setup** - 5 minutes to configure
+- 🔒 **Secure** - Token-based authentication
+- 🌍 **Reliable** - GitHub's infrastructure
 
 #### Backend Mode
 
@@ -320,10 +331,11 @@ If this project helps you, welcome to give it a Star ⭐
 
 ## 中文
 
-一个优雅、现代化的个人网站导航管理系统，支持**双模式部署**：
+一个优雅、现代化的个人网站导航管理系统，支持**三种部署模式**：
 
-- **GitHub Pages 模式**：纯前端，零成本，数据存储在浏览器
-- **后端模式**：Express.js + MySQL，支持多用户和完整功能
+- **localStorage 模式**：纯前端，数据在浏览器（默认）
+- **GitHub Gist 模式**：纯前端，通过 Gist 跨设备同步 ⭐ **推荐**
+- **后端模式**：全栈方案，MySQL 数据库，支持多用户
 
 ### ✨ 特性
 
@@ -336,12 +348,22 @@ If this project helps you, welcome to give it a Star ⭐
 - 📊 **分组管理** - 灵活的分组管理，支持公开/私密设置
 - 💾 **数据导出/导入** - 支持 JSON 格式的数据备份和恢复
 
-#### GitHub Pages 模式
+#### localStorage 模式
 
-- 🚀 **零成本部署** - 完全免费的静态托管
-- 📦 **客户端存储** - 数据存储在浏览器 localStorage
-- ⚡ **快速访问** - 无后端延迟，直接操作本地数据
-- 🔒 **隐私保护** - 数据完全在本地，不上传到服务器
+- 🚀 **零成本** - 完全免费
+- 📦 **浏览器存储** - 数据在 localStorage
+- ⚡ **即时响应** - 无网络延迟
+- 🔒 **隐私保护** - 数据完全本地
+- ⚠️ **单设备** - 无跨设备同步
+
+#### GitHub Gist 模式 ⭐ **推荐**
+
+- 🚀 **零成本** - 免费 GitHub Gist 存储
+- 🔄 **跨设备同步** - 任何浏览器访问
+- 📚 **版本历史** - 自动版本控制
+- ⚡ **快速设置** - 5 分钟配置完成
+- 🔒 **安全可靠** - Token 认证
+- 🌍 **稳定** - GitHub 基础设施
 
 #### 后端模式
 
