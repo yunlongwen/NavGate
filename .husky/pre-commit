@@ -18,13 +18,7 @@ pnpm exec lint-staged || {
   exit 1
 }
 
-# Format staged files (prettier)
-echo "▸ Running prettier..."
-pnpm exec prettier --write --staged || {
-  echo "❌ prettier failed"
-  echo "Please fix formatting errors before committing."
-  echo "Run 'pnpm run format' to see all formatting errors."
-  exit 1
-}
+# Format check is already done by lint-staged above
+# No need for separate prettier run
 
 echo "✅ Pre-commit checks passed!"
