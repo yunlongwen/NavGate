@@ -1,4 +1,4 @@
-import { Box, Typography, Paper, IconButton, Grid2 as Grid } from '@mui/material'
+import { Box, Typography, Paper, IconButton, Grid } from '@mui/material'
 import { Edit, Delete, Add } from '@mui/icons-material'
 import { Group, Site } from '@navgate/types'
 import SiteCard from './SiteCard'

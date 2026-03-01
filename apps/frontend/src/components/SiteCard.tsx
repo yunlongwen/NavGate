@@ -8,7 +8,7 @@ interface SiteCardProps {
   onDataChange: () => void
 }
 
-export default function SiteCard({ site, darkMode, onDataChange }: SiteCardProps) {
+export default function SiteCard({ site, darkMode }: SiteCardProps) {
   const handleOpenSite = () => {
     window.open(site.url, '_blank', 'noopener,noreferrer')
   }

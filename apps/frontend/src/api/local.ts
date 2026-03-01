@@ -7,13 +7,6 @@ const DEFAULT_CONFIG: Config = {
   SITE_DESCRIPTION: '我的个人导航站',
 }
 
-// 默认数据
-const DEFAULT_DATA = {
-  groups: [] as Group[],
-  sites: [] as Site[],
-  config: DEFAULT_CONFIG,
-}
-
 // 获取或初始化数据
 function getData() {
   return {

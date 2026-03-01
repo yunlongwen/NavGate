@@ -77,7 +77,7 @@ export function getFaviconUrl(url: string): string {
 /**
  * 排序数组
  */
-export function reorderArray<T extends { order_num: number }>(
+export function reorderArray<T extends { id: number; order_num: number }>(
   array: T[],
   orders: Array<{ id: number; order_num: number }>
 ): T[] {
