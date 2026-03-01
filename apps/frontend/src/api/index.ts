@@ -7,11 +7,14 @@ const mode = import.meta.env.VITE_DEPLOY_MODE || 'github-pages'
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 let apiModule: any
 
-if (mode === 'github-pages') {
-  // GitHub Pages 模式：直接导入 localStorage 实现
+if (mode === 'gist') {
+  // Gist 模式：使用 GitHub Gist 作为存储
+  apiModule = import('./gist')
+} else if (mode === 'github-pages') {
+  // GitHub Pages 模式：使用 localStorage
   apiModule = import('./local')
 } else {
-  // 后端模式：直接导入 HTTP API 实现
+  // 后端模式：使用 HTTP API
   apiModule = import('./http')
 }
 
