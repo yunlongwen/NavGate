@@ -35,7 +35,7 @@
     "@dnd-kit/utilities": "^3.2.2",
     "@emotion/react": "^11.14.0",
     "@emotion/styled": "^11.14.0",
-    "fontsource/roboto": "^5.2.5",
+    "@fontsource/roboto": "^5.2.5",
     "@mui/icons-material": "^7.0.1"
   },
   "devDependencies": {
@@ -45,7 +45,6 @@
     "eslint-config-prettier": "^9.1.0",
     "eslint-plugin-react-hooks": "^5.1.0",
     "eslint-plugin-react-refresh": "^0.4.19",
-    "eslint-config-react": "^19.0.0",
     "globals": "^15.15.0",
     "prettier": "^3.2.8",
     "typescript": "~5.7.2",
@@ -54,14 +53,11 @@
     "gh-pages": "^6.1.1",
     "@commitlint/cli": "^19.6.1",
     "@commitlint/config-conventional": "^19.6.0",
-    "@commitlint/config-json": "^19.6.0",
     "husky": "^9.1.7",
     "lint-staged": "^15.2.11",
     "commitlint": "^19.6.1",
-    "@commitlint/config-conventional": "^19.6.0",
     "@commitlint/format": "^19.2.0",
-    "cz-conventional-changelog": "^19.2.0",
-    "cz-custom": "^1.0.0"
+    "cz-conventional-changelog": "^3.3.0"
   },
   "engines": {
     "node": ">=18.0.0",
