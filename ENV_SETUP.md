@@ -12,15 +12,15 @@ This document details the configuration and usage of various environment variabl
 
 ### 📋 Environment Variables Overview
 
-| Variable Name      | Description                    | Required | Default      | Mode    |
-| ------------------ | ------------------------------ | -------- | ------------ | ------- |
-| `VITE_DEPLOY_MODE` | Deployment mode                | ✅       | github-pages | All     |
-| `DATABASE_URL`     | MySQL connection string        | ❌       | -            | Backend |
-| `JWT_SECRET`       | JWT secret key                 | ❌       | -            | Backend |
-| `AUTH_USERNAME`    | Admin username                 | ❌       | admin        | Backend |
-| `AUTH_PASSWORD`    | Admin password (encrypted)     | ❌       | -            | Backend |
-| `PORT`             | Backend service port           | ❌       | 3000         | Backend |
-| `NODE_ENV`         | Runtime environment            | ❌       | development  | Backend |
+| Variable Name      | Description                | Required | Default      | Mode    |
+| ------------------ | -------------------------- | -------- | ------------ | ------- |
+| `VITE_DEPLOY_MODE` | Deployment mode            | ✅       | github-pages | All     |
+| `DATABASE_URL`     | MySQL connection string    | ❌       | -            | Backend |
+| `JWT_SECRET`       | JWT secret key             | ❌       | -            | Backend |
+| `AUTH_USERNAME`    | Admin username             | ❌       | admin        | Backend |
+| `AUTH_PASSWORD`    | Admin password (encrypted) | ❌       | -            | Backend |
+| `PORT`             | Backend service port       | ❌       | 3000         | Backend |
+| `NODE_ENV`         | Runtime environment        | ❌       | development  | Backend |
 
 ---
 

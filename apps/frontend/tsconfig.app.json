@@ -12,10 +12,6 @@
     }
   ],
   "compilerOptions": {
-    "types": [
-    ]
-  }
-}
-    ]
+    "types": []
   }
 }

@@ -70,15 +70,15 @@ An elegant, modern personal website navigation management system with **dual dep
 
 Select the appropriate deployment mode based on your needs:
 
-| Feature            | GitHub Pages Mode    | Backend Mode              |
-| ------------------ | -------------------- | ------------------------- |
-| Cost               | Free                 | Requires server           |
-| Data Storage       | Browser localStorage | MySQL Database            |
-| Authentication     | None                 | JWT + bcrypt              |
-| Multi-device Sync  | ❌ Not supported     | ✅ Supported              |
-| Multi-user         | ❌ Not supported     | ✅ Supported              |
-| Deployment Difficulty | Simple            | Moderate                  |
-| Use Case           | Personal use, zero cost | Enterprise, multi-user |
+| Feature               | GitHub Pages Mode       | Backend Mode           |
+| --------------------- | ----------------------- | ---------------------- |
+| Cost                  | Free                    | Requires server        |
+| Data Storage          | Browser localStorage    | MySQL Database         |
+| Authentication        | None                    | JWT + bcrypt           |
+| Multi-device Sync     | ❌ Not supported        | ✅ Supported           |
+| Multi-user            | ❌ Not supported        | ✅ Supported           |
+| Deployment Difficulty | Simple                  | Moderate               |
+| Use Case              | Personal use, zero cost | Enterprise, multi-user |
 
 ---
 

@@ -56,10 +56,7 @@ export const reorderGroups = async (
   return api.reorderGroups(orders)
 }
 
-export const getSites = async (
-  groupId?: number,
-  includePrivate?: boolean
-): Promise<Site[]> => {
+export const getSites = async (groupId?: number, includePrivate?: boolean): Promise<Site[]> => {
   const api = await getApi()
   return api.getSites(groupId, includePrivate)
 }

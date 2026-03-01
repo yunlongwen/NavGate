@@ -77,7 +77,9 @@ export async function deleteGroup(id: number): Promise<void> {
   }
 }
 
-export async function reorderGroups(orders: Array<{ id: number; order_num: number }>): Promise<void> {
+export async function reorderGroups(
+  orders: Array<{ id: number; order_num: number }>
+): Promise<void> {
   const response = await fetch(`${API_BASE}/groups/reorder`, {
     method: 'POST',
     headers: getAuthHeaders(),
@@ -106,7 +108,9 @@ export async function getSites(groupId?: number, includePrivate = false): Promis
   return response.json()
 }
 
-export async function createSite(site: Omit<Site, 'id' | 'created_at' | 'updated_at'>): Promise<Site> {
+export async function createSite(
+  site: Omit<Site, 'id' | 'created_at' | 'updated_at'>
+): Promise<Site> {
   const response = await fetch(`${API_BASE}/sites`, {
     method: 'POST',
     headers: getAuthHeaders(),
