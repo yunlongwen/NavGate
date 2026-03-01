@@ -4,6 +4,7 @@ const mode = import.meta.env.VITE_DEPLOY_MODE || 'github-pages'
 
 // 根据环境选择正确的 API 实现
 // 使用条件导入而不是 top-level await
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 let apiModule: any
 
 if (mode === 'github-pages') {

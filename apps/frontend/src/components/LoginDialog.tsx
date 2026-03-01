@@ -32,7 +32,7 @@ export default function LoginDialog({ open, onClose, onLogin }: LoginDialogProps
       onLogin(response.token)
       setUsername('')
       setPassword('')
-    } catch (err) {
+    } catch {
       setError('登录失败，请检查用户名和密码')
     } finally {
       setLoading(false)

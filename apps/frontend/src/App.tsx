@@ -52,12 +52,8 @@ function App() {
   }
 
   const handleImport = (jsonData: string) => {
-    try {
-      importData(jsonData)
-      loadData()
-    } catch (error) {
-      throw error
-    }
+    importData(jsonData)
+    loadData()
   }
 
   if (loading) {
