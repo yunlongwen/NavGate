@@ -10,6 +10,7 @@ export async function getSites(req: Request, res: Response) {
     const groupId = req.query.groupId ? parseInt(req.query.groupId as string) : undefined
     const includePrivate = req.query.includePrivate === 'true'
 
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const where: any = {}
     if (groupId) {
       where.group_id = groupId
