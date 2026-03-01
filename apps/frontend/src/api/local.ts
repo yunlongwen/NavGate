@@ -3,15 +3,206 @@ import { storage, generateId, reorderArray } from '@navgate/utils'
 
 // 默认配置
 const DEFAULT_CONFIG: Config = {
-  SITE_TITLE: 'NavGate',
-  SITE_DESCRIPTION: '我的个人导航站',
+  SITE_TITLE: 'AI Engineer Hub',
+  SITE_DESCRIPTION: 'AI应用工程师的开发导航站',
 }
+
+// 默认分组数据（AI应用工程师常用）
+const DEFAULT_GROUPS: Group[] = [
+  {
+    id: 1,
+    name: 'AI 开发工具',
+    order_num: 0,
+    is_public: 1,
+    created_at: new Date().toISOString(),
+    updated_at: new Date().toISOString(),
+  },
+  {
+    id: 2,
+    name: 'AI 模型平台',
+    order_num: 1,
+    is_public: 1,
+    created_at: new Date().toISOString(),
+    updated_at: new Date().toISOString(),
+  },
+  {
+    id: 3,
+    name: '开发资源',
+    order_num: 2,
+    is_public: 1,
+    created_at: new Date().toISOString(),
+    updated_at: new Date().toISOString(),
+  },
+]
+
+// 默认站点数据
+const DEFAULT_SITES: Site[] = [
+  // AI 开发工具
+  {
+    id: 101,
+    group_id: 1,
+    name: 'Cursor',
+    url: 'https://cursor.sh',
+    description: 'AI-powered code editor',
+    icon: 'https://cursor.sh/favicon.ico',
+    order_num: 0,
+    is_public: 1,
+    created_at: new Date().toISOString(),
+    updated_at: new Date().toISOString(),
+  },
+  {
+    id: 102,
+    group_id: 1,
+    name: 'GitHub Copilot',
+    url: 'https://github.com/features/copilot',
+    description: 'Your AI pair programmer',
+    icon: 'https://github.githubassets.com/favicons/favicon.svg',
+    order_num: 1,
+    is_public: 1,
+    created_at: new Date().toISOString(),
+    updated_at: new Date().toISOString(),
+  },
+  {
+    id: 103,
+    group_id: 1,
+    name: 'V0.dev',
+    url: 'https://v0.dev',
+    description: 'Generate UI with AI',
+    icon: 'https://v0.dev/favicon.ico',
+    order_num: 2,
+    is_public: 1,
+    created_at: new Date().toISOString(),
+    updated_at: new Date().toISOString(),
+  },
+  {
+    id: 104,
+    group_id: 1,
+    name: 'Bolt.new',
+    url: 'https://bolt.new',
+    description: 'Full-stack web development with AI',
+    icon: 'https://bolt.new/favicon.ico',
+    order_num: 3,
+    is_public: 1,
+    created_at: new Date().toISOString(),
+    updated_at: new Date().toISOString(),
+  },
+
+  // AI 模型平台
+  {
+    id: 201,
+    group_id: 2,
+    name: 'OpenAI',
+    url: 'https://platform.openai.com',
+    description: 'GPT-4, ChatGPT API',
+    icon: 'https://openai.com/favicon.ico',
+    order_num: 0,
+    is_public: 1,
+    created_at: new Date().toISOString(),
+    updated_at: new Date().toISOString(),
+  },
+  {
+    id: 202,
+    group_id: 2,
+    name: 'Anthropic Claude',
+    url: 'https://console.anthropic.com',
+    description: 'Claude AI assistant',
+    icon: 'https://www.anthropic.com/favicon.ico',
+    order_num: 1,
+    is_public: 1,
+    created_at: new Date().toISOString(),
+    updated_at: new Date().toISOString(),
+  },
+  {
+    id: 203,
+    group_id: 2,
+    name: 'Hugging Face',
+    url: 'https://huggingface.co',
+    description: 'Open source AI models',
+    icon: 'https://huggingface.co/favicon.ico',
+    order_num: 2,
+    is_public: 1,
+    created_at: new Date().toISOString(),
+    updated_at: new Date().toISOString(),
+  },
+  {
+    id: 204,
+    group_id: 2,
+    name: 'Replicate',
+    url: 'https://replicate.com',
+    description: 'Run AI models in the cloud',
+    icon: 'https://replicate.com/favicon.ico',
+    order_num: 3,
+    is_public: 1,
+    created_at: new Date().toISOString(),
+    updated_at: new Date().toISOString(),
+  },
+
+  // 开发资源
+  {
+    id: 301,
+    group_id: 3,
+    name: 'GitHub',
+    url: 'https://github.com',
+    description: 'Code hosting platform',
+    icon: 'https://github.githubassets.com/favicons/favicon.svg',
+    order_num: 0,
+    is_public: 1,
+    created_at: new Date().toISOString(),
+    updated_at: new Date().toISOString(),
+  },
+  {
+    id: 302,
+    group_id: 3,
+    name: 'Stack Overflow',
+    url: 'https://stackoverflow.com',
+    description: 'Developer Q&A community',
+    icon: 'https://cdn.sstatic.net/Sites/stackoverflow/Img/favicon.ico',
+    order_num: 1,
+    is_public: 1,
+    created_at: new Date().toISOString(),
+    updated_at: new Date().toISOString(),
+  },
+  {
+    id: 303,
+    group_id: 3,
+    name: 'MDN Web Docs',
+    url: 'https://developer.mozilla.org',
+    description: 'Web development documentation',
+    icon: 'https://developer.mozilla.org/favicon-48x48.png',
+    order_num: 2,
+    is_public: 1,
+    created_at: new Date().toISOString(),
+    updated_at: new Date().toISOString(),
+  },
+  {
+    id: 304,
+    group_id: 3,
+    name: 'npm',
+    url: 'https://www.npmjs.com',
+    description: 'Node package manager',
+    icon: 'https://static.npmjs.com/58a19602036db1daee0d7863c94673a4.png',
+    order_num: 3,
+    is_public: 1,
+    created_at: new Date().toISOString(),
+    updated_at: new Date().toISOString(),
+  },
+]
 
 // 获取或初始化数据
 function getData() {
+  // 检查是否是首次访问
+  const hasData = storage.has('navgate_groups') || storage.has('navgate_sites')
+  
+  if (!hasData) {
+    // 首次访问，初始化默认数据
+    storage.set('navgate_groups', DEFAULT_GROUPS)
+    storage.set('navgate_sites', DEFAULT_SITES)
+    storage.set('navgate_config', DEFAULT_CONFIG)
+  }
+
   return {
-    groups: storage.get<Group[]>('navgate_groups') || [],
-    sites: storage.get<Site[]>('navgate_sites') || [],
+    groups: storage.get<Group[]>('navgate_groups') || DEFAULT_GROUPS,
+    sites: storage.get<Site[]>('navgate_sites') || DEFAULT_SITES,
     config: storage.get<Config>('navgate_config') || DEFAULT_CONFIG,
   }
 }
