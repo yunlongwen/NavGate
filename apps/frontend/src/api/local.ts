@@ -192,7 +192,7 @@ const DEFAULT_SITES: Site[] = [
 function getData() {
   // 检查是否是首次访问
   const hasData = storage.has('navgate_groups') || storage.has('navgate_sites')
-  
+
   if (!hasData) {
     // 首次访问，初始化默认数据
     storage.set('navgate_groups', DEFAULT_GROUPS)
