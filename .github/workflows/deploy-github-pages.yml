@@ -48,7 +48,7 @@ jobs:
           # - 数据存储在浏览器 / Data stored in browser
           # - 无跨设备同步 / No cross-device sync
           # - 零配置 / Zero configuration
-          VITE_DEPLOY_MODE: github-pages
+          # VITE_DEPLOY_MODE: github-pages
           #
           # 选项 2: GitHub Gist 模式（推荐）⭐
           # Option 2: GitHub Gist Mode (Recommended) ⭐
@@ -59,9 +59,9 @@ jobs:
           # 启用 Gist 模式，取消注释以下 3 行：
           # To enable Gist mode, uncomment these 3 lines:
           #
-          # VITE_DEPLOY_MODE: gist
-          # VITE_GIST_ID: ${{ secrets.VITE_GIST_ID }}
-          # VITE_GITHUB_TOKEN: ${{ secrets.VITE_GITHUB_TOKEN }}
+          VITE_DEPLOY_MODE: gist
+          VITE_GIST_ID: ${{ secrets.VITE_GIST_ID }}
+          VITE_GITHUB_TOKEN: ${{ secrets.VITE_GITHUB_TOKEN }}
           #
           # 设置步骤 / Setup Steps:
           # 1. 创建 GitHub Token (gist 权限) / Create GitHub Token (gist scope)
