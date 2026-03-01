@@ -1122,4 +1122,159 @@ git push origin master
 
 ---
 
+## 📝 Environment Variables Reference | 环境变量参考
+
+### Frontend Variables | 前端变量
+
+| Variable            | Required For | Description                  | Example                           |
+| ------------------- | ------------ | ---------------------------- | --------------------------------- |
+| `VITE_DEPLOY_MODE`  | All modes    | Storage mode selection       | `github-pages`, `gist`, `backend` |
+| `VITE_GIST_ID`      | Gist mode    | GitHub Gist ID               | `abc123def456...`                 |
+| `VITE_GITHUB_TOKEN` | Gist mode    | GitHub Personal Access Token | `ghp_xxxxxxxxxxxx`                |
+| `VITE_API_BASE_URL` | Backend mode | Backend API URL              | `http://localhost:3000`           |
+
+### Backend Variables | 后端变量
+
+| Variable        | Required | Description                 | Example                               |
+| --------------- | -------- | --------------------------- | ------------------------------------- |
+| `DATABASE_URL`  | Yes      | MySQL connection string     | `mysql://user:pass@host:3306/navgate` |
+| `JWT_SECRET`    | Yes      | JWT signing secret          | `your-super-secret-key`               |
+| `AUTH_USERNAME` | Yes      | Admin username              | `admin`                               |
+| `AUTH_PASSWORD` | Yes      | Bcrypt hashed password      | `$2b$10$...`                          |
+| `PORT`          | No       | Server port (default: 3000) | `3000`                                |
+| `NODE_ENV`      | No       | Environment                 | `development`, `production`           |
+
+---
+
+## 🔒 Security Best Practices | 安全最佳实践
+
+### ✅ DO | 应该做的
+
+1. **Use `.env.local` for local development**  
+   **本地开发使用 `.env.local`**
+   - Already in `.gitignore` / 已在 `.gitignore` 中
+   - Safe to store sensitive data / 可安全存储敏感数据
+
+2. **Use GitHub Secrets for production**  
+   **生产环境使用 GitHub Secrets**
+   - Encrypted by GitHub / GitHub 加密存储
+   - Never exposed in logs / 不会在日志中暴露
+
+3. **Use strong secrets**  
+   **使用强密钥**
+   - JWT_SECRET: At least 32 random characters / 至少 32 个随机字符
+   - GitHub Token: Minimal permissions (only `gist`) / 最小权限（仅 `gist`）
+
+4. **Rotate tokens regularly**  
+   **定期轮换 token**
+   - Change tokens every 3-6 months / 每 3-6 个月更换一次
+   - Revoke unused tokens / 撤销不用的 token
+
+### ❌ DON'T | 不应该做的
+
+1. **Never commit `.env` files with secrets**  
+   **永远不要提交包含密钥的 `.env` 文件**
+
+2. **Never hardcode tokens in code**  
+   **永远不要在代码中硬编码 token**
+
+3. **Never share tokens publicly**  
+   **永远不要公开分享 token**
+
+4. **Never grant unnecessary permissions**  
+   **永远不要授予不必要的权限**
+
+---
+
+## 🐛 Troubleshooting | 故障排除
+
+### "Environment variable not found" | "环境变量未找到"
+
+**Problem | 问题**: Variable not loaded / 变量未加载
+
+**Solutions | 解决方案:**
+
+1. **Local dev | 本地开发**: Check `.env.local` exists and has correct format / 检查 `.env.local` 是否存在且格式正确
+2. **GitHub Pages**: Verify secrets are added in repository settings / 验证 Secrets 已在仓库设置中添加
+3. **Restart dev server | 重启开发服务器**: After changing `.env.local`, restart `pnpm dev` / 修改 `.env.local` 后，重启 `pnpm dev`
+
+### "Gist API returns 401 Unauthorized" | "Gist API 返回 401 未授权"
+
+**Problem | 问题**: Invalid or expired token / Token 无效或过期
+
+**Solutions | 解决方案:**
+
+1. Check token is correct (starts with `ghp_`) / 检查 token 是否正确（以 `ghp_` 开头）
+2. Verify token has `gist` permission / 验证 token 有 `gist` 权限
+3. Token might be expired - generate new one / Token 可能已过期 - 生成新的
+4. Check token is added to GitHub Secrets correctly / 检查 token 是否正确添加到 GitHub Secrets
+
+### "Cannot find Gist" | "找不到 Gist"
+
+**Problem | 问题**: Invalid Gist ID / Gist ID 无效
+
+**Solutions | 解决方案:**
+
+1. Verify Gist ID is correct (from Gist URL) / 验证 Gist ID 正确（从 Gist URL 获取）
+2. Check Gist exists and is accessible / 检查 Gist 是否存在且可访问
+3. If secret gist, ensure token has access / 如果是 secret gist，确保 token 有访问权限
+
+### "Build fails on GitHub Actions" | "GitHub Actions 构建失败"
+
+**Problem | 问题**: Missing secrets or incorrect configuration / 缺少 secrets 或配置错误
+
+**Solutions | 解决方案:**
+
+1. Verify both `VITE_GIST_ID` and `VITE_GITHUB_TOKEN` are added to GitHub Secrets / 验证 `VITE_GIST_ID` 和 `VITE_GITHUB_TOKEN` 都已添加到 GitHub Secrets
+2. Check workflow file has correct environment variables / 检查 workflow 文件有正确的环境变量
+3. Ensure secrets are not expired / 确保 secrets 未过期
+4. Check GitHub Actions logs for specific error messages / 查看 GitHub Actions 日志获取具体错误信息
+
+---
+
+## 📖 Quick Reference | 快速参考
+
+### Local Development Setup | 本地开发设置
+
+```bash
+# 1. Create .env.local in apps/frontend/
+cd apps/frontend
+touch .env.local
+
+# 2. Add your configuration
+echo "VITE_DEPLOY_MODE=gist" >> .env.local
+echo "VITE_GIST_ID=your_gist_id" >> .env.local
+echo "VITE_GITHUB_TOKEN=ghp_your_token" >> .env.local
+
+# 3. Start dev server
+pnpm dev
+```
+
+### GitHub Pages Deployment | GitHub Pages 部署
+
+```bash
+# 1. Add secrets in GitHub repo settings
+# Settings → Secrets and variables → Actions → New repository secret
+
+# 2. Update workflow file
+# Edit .github/workflows/deploy-github-pages.yml
+
+# 3. Push to deploy
+git push origin master
+```
+
+### Verify Configuration | 验证配置
+
+```bash
+# Check .gitignore includes .env.local
+grep "\.env\.local" .gitignore
+# Output: .env.local ✅
+
+# Verify .env.local won't be committed
+git status
+# .env.local should not appear in the list ✅
+```
+
+---
+
 **选择适合你的模式！🚀**
