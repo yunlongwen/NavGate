@@ -90,8 +90,9 @@ NavGate supports **three storage modes**. Choose based on your needs:
 | Multi-user        | ❌           | ❌           | ✅           |
 | Recommended For   | Testing      | **Personal** | Team/Company |
 
-📖 **Quick Setup Guide**: [QUICK_START.md](QUICK_START.md)
-📖 **Detailed Comparison**: [DEPLOYMENT_MODES.md](DEPLOYMENT_MODES.md)
+📖 **Setup Guide & Mode Comparison**: [DEPLOYMENT_MODES.md](DEPLOYMENT_MODES.md)  
+📖 **Environment Configuration**: [ENV_CONFIG_GUIDE.md](ENV_CONFIG_GUIDE.md)  
+📖 **User Guide**: [USER_GUIDE.md](USER_GUIDE.md)
 
 ---
 
@@ -415,8 +416,9 @@ NavGate 支持**三种存储模式**，根据需求选择：
 | 多用户     | ❌           | ❌           | ✅         |
 | 推荐用途   | 测试         | **个人使用** | 团队/企业  |
 
-📖 **快速设置指南**：[QUICK_START.md](QUICK_START.md)
-📖 **详细对比**：[DEPLOYMENT_MODES.md](DEPLOYMENT_MODES.md)
+📖 **设置指南与模式对比**：[DEPLOYMENT_MODES.md](DEPLOYMENT_MODES.md)  
+📖 **环境变量配置**：[ENV_CONFIG_GUIDE.md](ENV_CONFIG_GUIDE.md)  
+📖 **使用指南**：[USER_GUIDE.md](USER_GUIDE.md)
 
 ---
 

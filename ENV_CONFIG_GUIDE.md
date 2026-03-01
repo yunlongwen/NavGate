@@ -744,8 +744,8 @@ VITE_GITHUB_TOKEN=ghp_你的_token
 
 ## 📚 相关文档
 
-- **[QUICK_START.md](QUICK_START.md)** - 5 分钟快速开始
-- **[DEPLOYMENT_MODES.md](DEPLOYMENT_MODES.md)** - 模式详细对比
+- **[DEPLOYMENT_MODES.md](DEPLOYMENT_MODES.md)** - 5 分钟快速开始 + 模式详细对比
+- **[USER_GUIDE.md](USER_GUIDE.md)** - 用户使用指南
 - **[ENV_SETUP.md](ENV_SETUP.md)** - 完整环境设置
 
 ---

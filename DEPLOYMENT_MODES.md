@@ -8,6 +8,72 @@
 
 ## English
 
+## 🚀 Quick Start (5 Minutes)
+
+**Want to get started quickly?** Follow these steps to set up **GitHub Gist Mode** (recommended):
+
+### Step 1: Create GitHub Token (2 min)
+
+1. Visit: https://github.com/settings/tokens
+2. Click **"Generate new token (classic)"**
+3. Name: `NavGate Gist Storage`
+4. Check **`gist`** scope only
+5. Click **"Generate token"**
+6. Copy token (starts with `ghp_`)
+
+### Step 2: Create Gist (1 min)
+
+1. Visit: https://gist.github.com/
+2. Click **"Create new gist"**
+3. Filename: `navgate-data.json`
+4. Paste initial data (see `gist-data.json` in repo, or use empty template below)
+5. Click **"Create secret gist"**
+6. Copy Gist ID from URL (e.g., `abc123def456...`)
+
+**Empty template:**
+
+```json
+{
+  "groups": [],
+  "sites": [],
+  "config": {
+    "SITE_TITLE": "AI Engineer Hub",
+    "SITE_DESCRIPTION": "AI应用工程师的开发导航站"
+  }
+}
+```
+
+### Step 3: Configure GitHub Secrets (1 min)
+
+1. Go to your repo: **Settings** → **Secrets and variables** → **Actions**
+2. Add two secrets:
+   - Name: `VITE_GIST_ID`, Value: `[your_gist_id]`
+   - Name: `VITE_GITHUB_TOKEN`, Value: `[your_token]`
+
+### Step 4: Update Workflow (1 min)
+
+Edit `.github/workflows/deploy-github-pages.yml`, find the Build step and uncomment Gist mode:
+
+```yaml
+env:
+  # VITE_DEPLOY_MODE: github-pages  # Comment this
+  VITE_DEPLOY_MODE: gist # Uncomment this
+  VITE_GIST_ID: ${{ secrets.VITE_GIST_ID }}
+  VITE_GITHUB_TOKEN: ${{ secrets.VITE_GITHUB_TOKEN }}
+```
+
+### Step 5: Deploy
+
+```bash
+git add .github/workflows/deploy-github-pages.yml
+git commit -m "feat: enable Gist storage mode"
+git push origin master
+```
+
+**Done!** 🎉 Your site will now sync across devices!
+
+---
+
 ## 📦 Deployment Modes Overview
 
 NavGate supports **three deployment modes** with different data storage approaches:
@@ -501,6 +567,72 @@ Quick steps:
 <a name="中文"></a>
 
 ## 中文
+
+## 🚀 快速开始（5 分钟）
+
+**想要快速开始？** 按照以下步骤设置 **GitHub Gist 模式**（推荐）：
+
+### 步骤 1：创建 GitHub Token（2 分钟）
+
+1. 访问：https://github.com/settings/tokens
+2. 点击 **"Generate new token (classic)"**
+3. 名称：`NavGate Gist Storage`
+4. 仅勾选 **`gist`** 权限
+5. 点击 **"Generate token"**
+6. 复制 token（以 `ghp_` 开头）
+
+### 步骤 2：创建 Gist（1 分钟）
+
+1. 访问：https://gist.github.com/
+2. 点击 **"Create new gist"**
+3. 文件名：`navgate-data.json`
+4. 粘贴初始数据（参见仓库中的 `gist-data.json`，或使用下方空模板）
+5. 点击 **"Create secret gist"**
+6. 从 URL 复制 Gist ID（例如：`abc123def456...`）
+
+**空模板：**
+
+```json
+{
+  "groups": [],
+  "sites": [],
+  "config": {
+    "SITE_TITLE": "AI Engineer Hub",
+    "SITE_DESCRIPTION": "AI应用工程师的开发导航站"
+  }
+}
+```
+
+### 步骤 3：配置 GitHub Secrets（1 分钟）
+
+1. 进入仓库：**Settings** → **Secrets and variables** → **Actions**
+2. 添加两个密钥：
+   - Name: `VITE_GIST_ID`，Value: `[你的_gist_id]`
+   - Name: `VITE_GITHUB_TOKEN`，Value: `[你的_token]`
+
+### 步骤 4：更新 Workflow（1 分钟）
+
+编辑 `.github/workflows/deploy-github-pages.yml`，找到 Build 步骤并取消注释 Gist 模式：
+
+```yaml
+env:
+  # VITE_DEPLOY_MODE: github-pages  # 注释掉这行
+  VITE_DEPLOY_MODE: gist # 取消注释这行
+  VITE_GIST_ID: ${{ secrets.VITE_GIST_ID }}
+  VITE_GITHUB_TOKEN: ${{ secrets.VITE_GITHUB_TOKEN }}
+```
+
+### 步骤 5：部署
+
+```bash
+git add .github/workflows/deploy-github-pages.yml
+git commit -m "feat: 启用 Gist 存储模式"
+git push origin master
+```
+
+**完成！** 🎉 你的网站现在可以跨设备同步了！
+
+---
 
 ## 📦 部署模式概览
 
