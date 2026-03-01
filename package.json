@@ -1,0 +1,32 @@
+{
+  "name": "navgate",
+  "private": true,
+  "version": "2.0.0",
+  "description": "一个优雅、现代化的个人网站导航管理系统 - 支持双模式部署",
+  "scripts": {
+    "dev": "pnpm --filter frontend dev",
+    "dev:backend": "pnpm --filter server dev",
+    "build": "pnpm --filter frontend build",
+    "build:backend": "pnpm --filter server build",
+    "preview": "pnpm --filter frontend preview",
+    "lint": "pnpm -r lint",
+    "format": "prettier --write \"**/*.{js,jsx,ts,tsx,json,css,scss,md}\"",
+    "format:check": "prettier --check \"**/*.{js,jsx,ts,tsx,json,css,scss,md}\"",
+    "deploy:github-pages": "pnpm --filter frontend build && gh-pages -d apps/frontend/dist",
+    "deploy:aliyun": "docker/scripts/deploy-aliyun.sh",
+    "test": "pnpm -r test",
+    "hash-password": "tsx scripts/hash-password.ts"
+  },
+  "devDependencies": {
+    "@types/node": "^20.11.0",
+    "gh-pages": "^6.1.1",
+    "prettier": "^3.2.8",
+    "tsx": "^4.20.6",
+    "typescript": "~5.7.2"
+  },
+  "engines": {
+    "node": ">=18.0.0",
+    "pnpm": ">=8.0.0"
+  },
+  "packageManager": "pnpm@8.15.0"
+}

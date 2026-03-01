@@ -1,0 +1,19 @@
+{
+  "name": "@navgate/validation",
+  "version": "1.0.0",
+  "description": "NavGate 数据验证逻辑",
+  "main": "index.ts",
+  "types": "index.ts",
+  "type": "module",
+  "scripts": {
+    "build": "tsc",
+    "type-check": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@navgate/types": "workspace:*",
+    "@navgate/utils": "workspace:*"
+  },
+  "devDependencies": {
+    "typescript": "~5.7.2"
+  }
+}

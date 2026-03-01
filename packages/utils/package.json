@@ -1,0 +1,19 @@
+{
+  "name": "@navgate/utils",
+  "version": "1.0.0",
+  "description": "NavGate 共享工具函数",
+  "main": "index.ts",
+  "types": "index.ts",
+  "type": "module",
+  "scripts": {
+    "build": "tsc",
+    "type-check": "tsc --noEmit",
+    "test": "vitest"
+  },
+  "devDependencies": {
+    "@navgate/types": "workspace:*",
+    "@vitest/ui": "latest",
+    "typescript": "~5.7.2",
+    "vitest": "latest"
+  }
+}
