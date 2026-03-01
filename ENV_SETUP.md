@@ -1,10 +1,457 @@
-# 环境配置说明
+# Environment Configuration Guide | 环境配置说明
 
-本文档详细说明了 NavGate 项目中各种环境变量的配置和使用方法。
+[English](#english) | [中文](#中文)
 
 ---
 
-## 📋 环境变量总览
+<a name="english"></a>
+
+## English
+
+This document details the configuration and usage of various environment variables in the NavGate project.
+
+### 📋 Environment Variables Overview
+
+| Variable Name      | Description                    | Required | Default      | Mode    |
+| ------------------ | ------------------------------ | -------- | ------------ | ------- |
+| `VITE_DEPLOY_MODE` | Deployment mode                | ✅       | github-pages | All     |
+| `DATABASE_URL`     | MySQL connection string        | ❌       | -            | Backend |
+| `JWT_SECRET`       | JWT secret key                 | ❌       | -            | Backend |
+| `AUTH_USERNAME`    | Admin username                 | ❌       | admin        | Backend |
+| `AUTH_PASSWORD`    | Admin password (encrypted)     | ❌       | -            | Backend |
+| `PORT`             | Backend service port           | ❌       | 3000         | Backend |
+| `NODE_ENV`         | Runtime environment            | ❌       | development  | Backend |
+
+---
+
+### 🚀 Deployment Mode Configuration
+
+#### VITE_DEPLOY_MODE
+
+Controls the application running mode, determines data storage and authentication methods.
+
+**Available values:**
+
+- `github-pages` - GitHub Pages mode (pure frontend)
+- `backend` - Backend mode (Express.js + MySQL)
+
+**Configuration methods:**
+
+```bash
+# Method 1: Environment variable
+export VITE_DEPLOY_MODE=github-pages
+
+# Method 2: In .env file
+echo "VITE_DEPLOY_MODE=github-pages" >> .env
+
+# Method 3: Docker Compose
+environment:
+  - VITE_DEPLOY_MODE=github-pages
+```
+
+**Impact:**
+
+1. **API Implementation**
+   - `github-pages`: Uses localStorage
+   - `backend`: Uses HTTP requests to backend API
+
+2. **Authentication**
+   - `github-pages`: No authentication, data stored directly in browser
+   - `backend`: Uses JWT + bcrypt authentication
+
+3. **Data Storage**
+   - `github-pages`: Browser localStorage (5-10MB)
+   - `backend`: MySQL database (persistent)
+
+---
+
+### 🗄️ Database Configuration
+
+#### DATABASE_URL
+
+MySQL database connection string, only required when `VITE_DEPLOY_MODE=backend`.
+
+**Format:**
+
+```
+mysql://[user]:[password]@[host]:[port]/[database]
+```
+
+**Examples:**
+
+```env
+# Local MySQL
+DATABASE_URL=mysql://root:password123@localhost:3306/navgate
+
+# Remote MySQL (RDS)
+DATABASE_URL=mysql://navgate:securepassword@rm-xxxxx.mysql.rds.aliyuncs.com:3306/navgate
+
+# Docker Compose
+DATABASE_URL=mysql://root:${DB_PASSWORD}@db:3306/navgate
+```
+
+**Parameter description:**
+
+- `user` - Database username
+- `password` - Database password
+- `host` - Database host address
+- `port` - Database port (default 3306)
+- `database` - Database name
+
+**Docker Compose special configuration:**
+
+In `docker/docker-compose.yml`, the database URL uses Docker service name:
+
+```yaml
+environment:
+  - DATABASE_URL=mysql://root:${DB_PASSWORD}@db:3306/navgate
+```
+
+---
+
+### 🔐 Authentication Configuration
+
+#### JWT_SECRET
+
+Secret key string for signing and verifying JWT tokens, only required when `VITE_DEPLOY_MODE=backend`.
+
+**Requirements:**
+
+- At least 32 characters long
+- Contains letters, numbers, and special characters
+- Do not hardcode in code
+
+**Generation methods:**
+
+```bash
+# Method 1: Using Node.js
+node -e "console.log(require('crypto').randomBytes(32).toString('hex'))"
+
+# Method 2: Using OpenSSL
+openssl rand -hex 32
+
+# Method 3: Online generation
+# https://generate-secret.vercel.app/32
+```
+
+**Example:**
+
+```env
+JWT_SECRET=super-secret-jwt-key-change-this-please
+```
+
+**Security recommendations:**
+
+- Do not hardcode in code
+- Do not commit to Git repository
+- Rotate keys regularly
+- Use environment variable management tools (e.g., AWS Secrets Manager)
+
+#### AUTH_USERNAME
+
+Admin username, only required when `VITE_DEPLOY_MODE=backend`.
+
+**Example:**
+
+```env
+AUTH_USERNAME=myadmin
+```
+
+**Security recommendations:**
+
+- Do not use common usernames like "admin", "root"
+- Use hard-to-guess usernames
+
+#### AUTH_PASSWORD
+
+Admin password (bcrypt encrypted), only required when `VITE_DEPLOY_MODE=backend`.
+
+**Generate encrypted password:**
+
+```bash
+pnpm run hash-password
+```
+
+Enter your desired plaintext password, the tool will return the encrypted password.
+
+**Example:**
+
+```bash
+$ pnpm run hash-password
+? Enter password: mySecurePassword123
+$2a$10$abcdefghijklmnopqrstuvwxyz1234567890
+```
+
+Copy the generated encrypted password to `.env` file:
+
+```env
+AUTH_PASSWORD=$2a$10$abcdefghijklmnopqrstuvwxyz1234567890
+```
+
+**Security recommendations:**
+
+- Password at least 12 characters
+- Contains uppercase, lowercase letters, numbers and special characters
+- Change password regularly
+- Do not use the same password elsewhere
+
+---
+
+### 🌐 Server Configuration
+
+#### PORT
+
+Backend service listening port, only required when `VITE_DEPLOY_MODE=backend`.
+
+**Example:**
+
+```env
+PORT=3000
+```
+
+**Common ports:**
+
+- `3000` - Default backend port
+- `80` - HTTP standard port (requires root privileges)
+- `443` - HTTPS standard port (requires root privileges)
+
+#### NODE_ENV
+
+Runtime environment, affects certain application behaviors.
+
+**Available values:**
+
+- `development` - Development environment
+- `production` - Production environment
+
+**Impact:**
+
+- Log verbosity
+- Error handling methods
+- Performance optimization settings
+
+---
+
+### ☁️ Alibaba Cloud Configuration
+
+These variables are only needed when deploying to Alibaba Cloud.
+
+#### ALIYUN_ACCESS_KEY_ID
+
+Alibaba Cloud access key ID.
+
+**How to obtain:**
+
+1. Log in to Alibaba Cloud console
+2. Go to AccessKey management
+3. Create AccessKey
+
+**Example:**
+
+```env
+ALIYUN_ACCESS_KEY_ID=LTAI4xxxxxxxxxxxxxxxx
+```
+
+#### ALIYUN_ACCESS_KEY_SECRET
+
+Alibaba Cloud access key secret.
+
+**Example:**
+
+```env
+ALIYUN_ACCESS_KEY_SECRET=xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+```
+
+**Security recommendations:**
+
+- Do not commit to Git
+- Use RAM sub-accounts with limited permissions
+- Rotate keys regularly
+
+#### ALIYUN_REGION
+
+Alibaba Cloud region code.
+
+**Common regions:**
+
+- `cn-hangzhou` - East China 1 (Hangzhou)
+- `cn-shanghai` - East China 2 (Shanghai)
+- `cn-beijing` - North China 2 (Beijing)
+- `cn-shenzhen` - South China 1 (Shenzhen)
+- `us-east-1` - US East 1 (Virginia)
+
+**Example:**
+
+```env
+ALIYUN_REGION=cn-hangzhou
+```
+
+#### ALIYUN_ECS_INSTANCE_ID
+
+Alibaba Cloud ECS instance ID.
+
+**How to obtain:**
+
+1. Go to ECS console
+2. Select instance
+3. View instance ID in instance details
+
+**Example:**
+
+```env
+ALIYUN_ECS_INSTANCE_ID=i-xxxxxxxxxxxxxxxxx
+```
+
+#### ALIYUN_ECS_SSH_KEY
+
+SSH private key file path for connecting to ECS instance.
+
+**Example:**
+
+```env
+ALIYUN_ECS_SSH_KEY=/path/to/your/ssh/key.pem
+```
+
+**Notes:**
+
+- Ensure correct file permissions: `chmod 400 your-key.pem`
+- Do not commit to Git
+- Keep private key secure
+
+---
+
+### 🐳 Docker Configuration
+
+#### DB_PASSWORD
+
+MySQL root password in Docker Compose.
+
+**Example:**
+
+```env
+DB_PASSWORD=your-mysql-root-password
+```
+
+**Usage in docker-compose.yml:**
+
+```yaml
+services:
+  db:
+    image: mysql:8.0
+    environment:
+      - MYSQL_ROOT_PASSWORD=${DB_PASSWORD}
+```
+
+---
+
+### 📝 .env File Examples
+
+#### GitHub Pages Mode
+
+```env
+# Deployment mode
+VITE_DEPLOY_MODE=github-pages
+
+# GitHub Pages mode requires no other configuration
+```
+
+#### Backend Mode (Local Development)
+
+```env
+# Deployment mode
+VITE_DEPLOY_MODE=backend
+
+# Database configuration
+DATABASE_URL=mysql://root:password@localhost:3306/navgate
+
+# JWT configuration
+JWT_SECRET=your-super-secret-jwt-key-change-this
+
+# Authentication configuration
+AUTH_USERNAME=myadmin
+AUTH_PASSWORD=$2a$10$abcdefghijklmnopqrstuvwxyz1234567890
+
+# Service port
+PORT=3000
+
+# Runtime environment
+NODE_ENV=development
+```
+
+#### Docker Compose Deployment
+
+```env
+# Docker Compose automatically sets the following variables
+DB_PASSWORD=your-mysql-root-password
+JWT_SECRET=your-super-secret-jwt-key
+AUTH_USERNAME=myadmin
+AUTH_PASSWORD=$2a$10$abcdefghijklmnopqrstuvwxyz1234567890
+```
+
+#### Alibaba Cloud Deployment
+
+```env
+# Deployment mode
+VITE_DEPLOY_MODE=backend
+
+# Database configuration (using RDS)
+DATABASE_URL=mysql://navgate:securepassword@rm-xxxxx.mysql.rds.aliyuncs.com:3306/navgate
+
+# JWT configuration
+JWT_SECRET=your-super-secret-jwt-key-change-this
+
+# Authentication configuration
+AUTH_USERNAME=myadmin
+AUTH_PASSWORD=$2a$10$abcdefghijklmnopqrstuvwxyz1234567890
+
+# Alibaba Cloud configuration
+ALIYUN_ACCESS_KEY_ID=LTAI4xxxxxxxxxxxxxxxx
+ALIYUN_ACCESS_KEY_SECRET=xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+ALIYUN_REGION=cn-hangzhou
+ALIYUN_ECS_INSTANCE_ID=i-xxxxxxxxxxxxxxxxx
+ALIYUN_ECS_SSH_KEY=/path/to/your/ssh/key.pem
+```
+
+---
+
+### 🔒 Security Best Practices
+
+1. **Never commit sensitive information to Git**
+   - Add `.env` to `.gitignore`
+   - Use environment variable management tools
+
+2. **Use strong keys and passwords**
+   - JWT_SECRET at least 32 characters
+   - Password at least 12 characters, including uppercase, lowercase, numbers and special characters
+
+3. **Rotate keys regularly**
+   - Change JWT_SECRET every 3-6 months
+   - Change database password regularly
+
+4. **Limit permissions**
+   - Use principle of least privilege
+   - Use sub-accounts instead of main accounts
+
+5. **Monitoring and logging**
+   - Enable access logs
+   - Monitor abnormal login behavior
+
+---
+
+### 📚 Related Documentation
+
+- [Deployment Guide](DEPLOYMENT.md)
+- [README](README.md)
+
+---
+
+<a name="中文"></a>
+
+## 中文
+
+本文档详细说明了 NavGate 项目中各种环境变量的配置和使用方法。
+
+### 📋 环境变量总览
 
 | 变量名             | 说明               | 必需 | 默认值       | 适用模式 |
 | ------------------ | ------------------ | ---- | ------------ | -------- |
@@ -18,9 +465,9 @@
 
 ---
 
-## 🚀 部署模式配置
+### 🚀 部署模式配置
 
-### VITE_DEPLOY_MODE
+#### VITE_DEPLOY_MODE
 
 控制应用运行的模式，决定了数据存储和认证方式。
 
@@ -59,9 +506,9 @@ environment:
 
 ---
 
-## 🗄️ 数据库配置
+### 🗄️ 数据库配置
 
-### DATABASE_URL
+#### DATABASE_URL
 
 MySQL 数据库连接字符串，仅在 `VITE_DEPLOY_MODE=backend` 时需要。
 
@@ -103,9 +550,9 @@ environment:
 
 ---
 
-## 🔐 认证配置
+### 🔐 认证配置
 
-### JWT_SECRET
+#### JWT_SECRET
 
 用于签名和验证 JWT token 的密钥字符串，仅在 `VITE_DEPLOY_MODE=backend` 时需要。
 
@@ -141,7 +588,7 @@ JWT_SECRET=super-secret-jwt-key-change-this-please
 - 定期更换密钥
 - 使用环境变量管理工具（如 AWS Secrets Manager）
 
-### AUTH_USERNAME
+#### AUTH_USERNAME
 
 管理员用户名，仅在 `VITE_DEPLOY_MODE=backend` 时需要。
 
@@ -156,7 +603,7 @@ AUTH_USERNAME=myadmin
 - 不要使用 "admin"、"root" 等常见用户名
 - 使用不易猜测的用户名
 
-### AUTH_PASSWORD
+#### AUTH_PASSWORD
 
 管理员密码（bcrypt 加密），仅在 `VITE_DEPLOY_MODE=backend` 时需要。
 
@@ -191,9 +638,9 @@ AUTH_PASSWORD=$2a$10$abcdefghijklmnopqrstuvwxyz1234567890
 
 ---
 
-## 🌐 服务器配置
+### 🌐 服务器配置
 
-### PORT
+#### PORT
 
 后端服务监听的端口号，仅在 `VITE_DEPLOY_MODE=backend` 时需要。
 
@@ -209,7 +656,7 @@ PORT=3000
 - `80` - HTTP 标准端口（需要 root 权限）
 - `443` - HTTPS 标准端口（需要 root 权限）
 
-### NODE_ENV
+#### NODE_ENV
 
 运行环境，影响应用的某些行为。
 
@@ -226,11 +673,11 @@ PORT=3000
 
 ---
 
-## ☁️ 阿里云配置
+### ☁️ 阿里云配置
 
 这些变量仅在部署到阿里云时需要。
 
-### ALIYUN_ACCESS_KEY_ID
+#### ALIYUN_ACCESS_KEY_ID
 
 阿里云访问密钥 ID。
 
@@ -246,7 +693,7 @@ PORT=3000
 ALIYUN_ACCESS_KEY_ID=LTAI4xxxxxxxxxxxxxxxx
 ```
 
-### ALIYUN_ACCESS_KEY_SECRET
+#### ALIYUN_ACCESS_KEY_SECRET
 
 阿里云访问密钥 Secret。
 
@@ -262,7 +709,7 @@ ALIYUN_ACCESS_KEY_SECRET=xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 - 使用 RAM 子账号并限制权限
 - 定期轮换密钥
 
-### ALIYUN_REGION
+#### ALIYUN_REGION
 
 阿里云区域代码。
 
@@ -280,7 +727,7 @@ ALIYUN_ACCESS_KEY_SECRET=xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 ALIYUN_REGION=cn-hangzhou
 ```
 
-### ALIYUN_ECS_INSTANCE_ID
+#### ALIYUN_ECS_INSTANCE_ID
 
 阿里云 ECS 实例 ID。
 
@@ -296,7 +743,7 @@ ALIYUN_REGION=cn-hangzhou
 ALIYUN_ECS_INSTANCE_ID=i-xxxxxxxxxxxxxxxxx
 ```
 
-### ALIYUN_ECS_SSH_KEY
+#### ALIYUN_ECS_SSH_KEY
 
 SSH 私钥文件路径，用于连接到 ECS 实例。
 
@@ -314,9 +761,9 @@ ALIYUN_ECS_SSH_KEY=/path/to/your/ssh/key.pem
 
 ---
 
-## 🐳 Docker 配置
+### 🐳 Docker 配置
 
-### DB_PASSWORD
+#### DB_PASSWORD
 
 Docker Compose 中 MySQL root 密码。
 
@@ -338,9 +785,9 @@ services:
 
 ---
 
-## 📝 .env 文件示例
+### 📝 .env 文件示例
 
-### GitHub Pages 模式
+#### GitHub Pages 模式
 
 ```env
 # 部署模式
@@ -349,7 +796,7 @@ VITE_DEPLOY_MODE=github-pages
 # GitHub Pages 模式不需要其他配置
 ```
 
-### 后端模式（本地开发）
+#### 后端模式（本地开发）
 
 ```env
 # 部署模式
@@ -372,7 +819,7 @@ PORT=3000
 NODE_ENV=development
 ```
 
-### Docker Compose 部署
+#### Docker Compose 部署
 
 ```env
 # Docker Compose 会自动设置以下变量
@@ -382,7 +829,7 @@ AUTH_USERNAME=myadmin
 AUTH_PASSWORD=$2a$10$abcdefghijklmnopqrstuvwxyz1234567890
 ```
 
-### 阿里云部署
+#### 阿里云部署
 
 ```env
 # 部署模式
@@ -408,7 +855,7 @@ ALIYUN_ECS_SSH_KEY=/path/to/your/ssh/key.pem
 
 ---
 
-## 🔒 安全最佳实践
+### 🔒 安全最佳实践
 
 1. **永远不要提交敏感信息到 Git**
    - 在 `.gitignore` 中添加 `.env`
@@ -432,7 +879,7 @@ ALIYUN_ECS_SSH_KEY=/path/to/your/ssh/key.pem
 
 ---
 
-## 📚 相关文档
+### 📚 相关文档
 
 - [部署指南](DEPLOYMENT.md)
-- [README.md](README.md)
+- [README](README.md)

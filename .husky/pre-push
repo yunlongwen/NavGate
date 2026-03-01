@@ -1,0 +1,85 @@
+#!/bin/bash
+
+echo "🚀 Running pre-push hook..."
+echo ""
+
+# Full lint check
+echo "▶ Running full lint check..."
+pnpm run lint || {
+  echo "❌ Lint check failed"
+  echo "Please fix linting errors before pushing"
+  exit 1
+}
+
+echo "✅ Lint check passed"
+
+# Format check
+echo "📐 Checking code formatting..."
+pnpm run format:check || {
+  echo "❌ Format check failed"
+  echo "Please run 'pnpm run format' to fix formatting errors"
+  exit 1
+}
+
+echo "✅ Format check passed"
+
+# Type check (frontend + server)
+echo "🔍 Checking TypeScript types..."
+pnpm --filter frontend type-check || {
+  echo "❌ Frontend type check failed"
+  echo "Please fix TypeScript errors before pushing"
+  exit 1
+}
+
+pnpm --filter server type-check || {
+  echo "❌ Backend type check failed"
+  echo "Please fix TypeScript errors before pushing"
+  exit 1
+}
+
+echo "✅ Type checks passed"
+
+# Build verification
+echo "🏗️  Verifying builds..."
+pnpm --filter frontend build || {
+  echo "❌ Frontend build failed"
+  echo "Please fix build errors before pushing"
+  exit 1
+}
+
+pnpm --filter server build || {
+  echo "❌ Backend build failed"
+  echo "Please fix build errors before pushing"
+  exit 1
+}
+
+echo "✅ Builds verified"
+
+# Test verification
+echo "🧪 Running tests..."
+pnpm test || {
+  echo "❌ Tests failed"
+  echo "Please fix failing tests before pushing"
+  echo ""
+  echo "Use 'pnpm --filter frontend test' to run frontend tests only"
+  exit 1
+}
+
+echo "✅ Tests passed"
+
+# Run Cloudflare cleanup verification
+echo "🧹 Verifying Cloudflare cleanup..."
+./scripts/verify-clean.sh || {
+  echo "❌ Cloudflare cleanup verification failed"
+  echo "Please ensure all Cloudflare files are removed"
+  exit 1
+}
+
+echo "✅ Cloudflare cleanup verified"
+
+echo ""
+echo "🚀 All pre-push checks passed!"
+echo "Proceeding to push..."
+echo ""
+
+exit 0

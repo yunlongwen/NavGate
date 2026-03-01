@@ -1,0 +1,55 @@
+{
+  "$schema": "node_modules/@commitlint/config-conventional",
+  "extends": ["@commitlint/config-conventional"],
+  
+  "rules": {
+    "type-enum": [2, "always", [
+      "feat",
+      "fix",
+      "docs",
+      "style",
+      "refactor",
+      "perf",
+      "test",
+      "build",
+      "ci",
+      "chore",
+      "revert"
+    ]],
+    "type-enum": [2, "always", ["lower-case"]],
+    "type-empty": [2, "never"],
+    "subject-empty": [2, "never"],
+    "subject-full-stop": [2, "never", "."],
+    "header-max-length": [2, "always", 100],
+    "body-max-line-length": [2, "always", 100],
+    
+    "scope-enum": [2, "always", [
+      "frontend",
+      "backend",
+      "packages/types",
+      "packages/utils",
+      "packages/validation",
+      "docker",
+      "ci",
+      "deps",
+      "config",
+      "docs"
+    ]],
+    "scope-enum": [2, "always", ["lower-case"]],
+    
+    "footer-max-line-length": [2, "always", 100],
+    
+    "footer-max-line-length": [2, "always", 100],
+    "references-empty": [1, "always"],
+    
+    // Custom rules for NavGate project
+    "navgate-rules": [2, "always", [
+      {
+        "name": "english-only-commit",
+        "level": "error",
+        "regex": "^[\u4e00-\u9fff\u3040-\u309f\u30a0-\ud7af]/",
+        "message": "Commit message must be in English only. No non-English characters detected.\n\nExample:\n✅ feat(frontend): add export/import data\n❌ feat: 添加导出功能\n\nLearn more: https://www.conventionalcommits.org/zh-hans/"
+      }
+    ]
+  }
+}

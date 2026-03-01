@@ -1,0 +1,30 @@
+#!/bin/bash
+
+echo "🔍 Running pre-commit hook..."
+
+# Stage all changes
+if [ -z "$(git diff --cached --name-only)" ]; then
+  echo "❌ No staged changes found"
+  echo "Use 'git add .' to stage changes before committing."
+  exit 1
+fi
+
+# Run lint-staged (lints + formats)
+echo "▶ Running lint-staged..."
+pnpm exec lint-staged || {
+  echo "❌ lint-staged failed"
+  echo "Please fix linting errors before committing."
+  echo "Run 'pnpm run lint' to see all errors."
+  exit 1
+}
+
+# Format staged files (prettier)
+echo "▸ Running prettier..."
+pnpm exec prettier --write --staged || {
+  echo "❌ prettier failed"
+  echo "Please fix formatting errors before committing."
+  echo "Run 'pnpm run format' to see all formatting errors."
+  exit 1
+}
+
+echo "✅ Pre-commit checks passed!"
