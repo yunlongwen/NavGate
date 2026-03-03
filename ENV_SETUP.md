@@ -440,7 +440,7 @@ ALIYUN_ECS_SSH_KEY=/path/to/your/ssh/key.pem
 
 ### 📚 Related Documentation
 
-- [Deployment Guide](DEPLOYMENT.md)
+- [Deployment Guide](DEPLOYMENT_MODES.md)
 - [README](README.md)
 
 ---
@@ -881,5 +881,5 @@ ALIYUN_ECS_SSH_KEY=/path/to/your/ssh/key.pem
 
 ### 📚 相关文档
 
-- [部署指南](DEPLOYMENT.md)
+- [部署指南](DEPLOYMENT_MODES.md)
 - [README](README.md)

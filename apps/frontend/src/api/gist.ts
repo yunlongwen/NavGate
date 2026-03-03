@@ -193,10 +193,18 @@ async function saveToGist(data: GistData): Promise<void> {
 
 // ===== 认证相关 =====
 
+const ADMIN_USERNAME = import.meta.env.VITE_ADMIN_USERNAME || ''
+const ADMIN_PASSWORD = import.meta.env.VITE_ADMIN_PASSWORD || ''
+
 export async function login(credentials: { username: string; password: string }) {
-  // Gist 模式不需要登录
+  if (ADMIN_USERNAME && ADMIN_PASSWORD) {
+    if (credentials.username !== ADMIN_USERNAME || credentials.password !== ADMIN_PASSWORD) {
+      throw new Error('用户名或密码错误')
+    }
+  }
+
   return {
-    token: 'gist-mode-token',
+    token: `gist-${Date.now()}-${Math.random().toString(36).slice(2)}`,
     username: credentials.username,
   }
 }

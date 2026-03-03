@@ -453,11 +453,6 @@ git push origin master
 
 ### Deploy Backend Mode
 
-See detailed instructions in:
-
-- [DEPLOYMENT.md](DEPLOYMENT.md) - Full deployment guide
-- [ENV_SETUP.md](ENV_SETUP.md) - Environment setup
-
 Quick steps:
 
 1. **Setup Database**
@@ -492,9 +487,62 @@ Quick steps:
    ```
 
 4. **Use Docker (Recommended)**
+
    ```bash
+   cd docker
    docker-compose up -d
    ```
+
+#### Docker Deployment
+
+##### 1. Configure Environment Variables
+
+Edit `.env` file:
+
+```env
+DB_PASSWORD=your-mysql-root-password
+JWT_SECRET=your-super-secret-jwt-key
+AUTH_USERNAME=admin
+AUTH_PASSWORD=$2a$10$abcdefghijklmnopqrstuvwxyz
+```
+
+##### 2. Generate Encrypted Password
+
+```bash
+pnpm run hash-password
+```
+
+##### 3. Build and Start
+
+```bash
+cd docker
+docker-compose up -d
+```
+
+#### Alibaba Cloud ECS Deployment
+
+##### Method 1: Use Deployment Script
+
+Edit `.env` file:
+
+```env
+ALIYUN_ACCESS_KEY_ID=your-access-key-id
+ALIYUN_ACCESS_KEY_SECRET=your-access-key-secret
+ALIYUN_REGION=cn-hangzhou
+ALIYUN_ECS_INSTANCE_ID=i-xxxxxxxxx
+ALIYUN_ECS_SSH_KEY=/path/to/ssh/key
+```
+
+```bash
+pnpm run deploy:aliyun
+```
+
+##### Method 2: Manual Deployment
+
+1. Install Docker and Docker Compose on Alibaba Cloud ECS
+2. Upload project to server
+3. Configure environment variables
+4. Run `docker-compose up -d`
 
 ---
 
@@ -1013,11 +1061,6 @@ git push origin master
 
 ### 部署后端模式
 
-查看详细说明：
-
-- [DEPLOYMENT.md](DEPLOYMENT.md) - 完整部署指南
-- [ENV_SETUP.md](ENV_SETUP.md) - 环境设置
-
 快速步骤：
 
 1. **设置数据库**
@@ -1052,9 +1095,62 @@ git push origin master
    ```
 
 4. **使用 Docker（推荐）**
+
    ```bash
+   cd docker
    docker-compose up -d
    ```
+
+#### Docker 部署
+
+##### 1. 配置环境变量
+
+编辑 `.env` 文件：
+
+```env
+DB_PASSWORD=your-mysql-root-password
+JWT_SECRET=your-super-secret-jwt-key
+AUTH_USERNAME=admin
+AUTH_PASSWORD=$2a$10$abcdefghijklmnopqrstuvwxyz
+```
+
+##### 2. 生成加密密码
+
+```bash
+pnpm run hash-password
+```
+
+##### 3. 构建并启动
+
+```bash
+cd docker
+docker-compose up -d
+```
+
+#### 阿里云 ECS 部署
+
+##### 方式一：使用部署脚本
+
+编辑 `.env` 文件：
+
+```env
+ALIYUN_ACCESS_KEY_ID=your-access-key-id
+ALIYUN_ACCESS_KEY_SECRET=your-access-key-secret
+ALIYUN_REGION=cn-hangzhou
+ALIYUN_ECS_INSTANCE_ID=i-xxxxxxxxx
+ALIYUN_ECS_SSH_KEY=/path/to/ssh/key
+```
+
+```bash
+pnpm run deploy:aliyun
+```
+
+##### 方式二：手动部署
+
+1. 在阿里云 ECS 上安装 Docker 和 Docker Compose
+2. 上传项目到服务器
+3. 配置环境变量
+4. 运行 `docker-compose up -d`
 
 ---
 
