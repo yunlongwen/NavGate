@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { Box, Typography, Fab } from '@mui/material'
+import { Box, Typography, Fab, Button, Tooltip } from '@mui/material'
 import { Add } from '@mui/icons-material'
 import { Group, Site } from '@navgate/types'
 import GroupSection from './GroupSection'
@@ -32,10 +32,25 @@ export default function Navigation({ groups, sites, darkMode, onDataChange }: Na
 
   if (groups.length === 0) {
     return (
-      <Box display="flex" justifyContent="center" alignItems="center" minHeight="400px">
+      <Box
+        display="flex"
+        flexDirection="column"
+        justifyContent="center"
+        alignItems="center"
+        minHeight="400px"
+        gap={2}
+      >
         <Typography variant="h6" color="text.secondary">
           暂无导航分组
         </Typography>
+        <Button variant="contained" startIcon={<Add />} onClick={() => setShowGroupDialog(true)}>
+          创建第一个分组
+        </Button>
+        <GroupDialog
+          open={showGroupDialog}
+          onClose={() => setShowGroupDialog(false)}
+          onSave={handleCreateGroup}
+        />
       </Box>
     )
   }
@@ -52,18 +67,22 @@ export default function Navigation({ groups, sites, darkMode, onDataChange }: Na
           onDataChange={onDataChange}
         />
       ))}
-      <Fab
-        color="primary"
-        aria-label="add"
-        sx={{
-          position: 'fixed',
-          bottom: 32,
-          right: 32,
-        }}
-        onClick={() => setShowGroupDialog(true)}
-      >
-        <Add />
-      </Fab>
+      <Tooltip title="新建分组">
+        <Fab
+          color="primary"
+          variant="extended"
+          aria-label="新建分组"
+          sx={{
+            position: 'fixed',
+            bottom: 32,
+            right: 32,
+          }}
+          onClick={() => setShowGroupDialog(true)}
+        >
+          <Add sx={{ mr: 1 }} />
+          新建分组
+        </Fab>
+      </Tooltip>
       <GroupDialog
         open={showGroupDialog}
         onClose={() => setShowGroupDialog(false)}

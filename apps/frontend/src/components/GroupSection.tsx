@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { Box, Typography, Paper, IconButton, Grid } from '@mui/material'
+import { Box, Typography, Paper, IconButton, Grid, Tooltip } from '@mui/material'
 import { Edit, Delete, Add } from '@mui/icons-material'
 import { Group, Site } from '@navgate/types'
 import SiteCard from './SiteCard'
@@ -92,15 +92,21 @@ export default function GroupSection({
             {group.name}
           </Typography>
           <Box>
-            <IconButton size="small" onClick={() => setShowSiteDialog(true)}>
-              <Add />
-            </IconButton>
-            <IconButton size="small" onClick={() => setShowGroupDialog(true)}>
-              <Edit />
-            </IconButton>
-            <IconButton size="small" onClick={() => setShowDeleteDialog(true)}>
-              <Delete />
-            </IconButton>
+            <Tooltip title="添加站点">
+              <IconButton size="small" onClick={() => setShowSiteDialog(true)}>
+                <Add />
+              </IconButton>
+            </Tooltip>
+            <Tooltip title="编辑分组">
+              <IconButton size="small" onClick={() => setShowGroupDialog(true)}>
+                <Edit />
+              </IconButton>
+            </Tooltip>
+            <Tooltip title="删除分组">
+              <IconButton size="small" onClick={() => setShowDeleteDialog(true)}>
+                <Delete />
+              </IconButton>
+            </Tooltip>
           </Box>
         </Box>
       </Paper>

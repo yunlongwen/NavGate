@@ -9,7 +9,14 @@ import {
   MenuItem,
   Button,
 } from '@mui/material'
-import { Brightness4, Brightness7, MoreVert, Download, Upload } from '@mui/icons-material'
+import {
+  Brightness4,
+  Brightness7,
+  MoreVert,
+  Download,
+  Upload,
+  FormatListBulleted,
+} from '@mui/icons-material'
 import { useState } from 'react'
 
 interface HeaderProps {
@@ -19,6 +26,7 @@ interface HeaderProps {
   onToggleDarkMode: () => void
   onExport?: () => void
   onImport?: () => void
+  onManageGroups?: () => void
 }
 
 export default function Header({
@@ -28,6 +36,7 @@ export default function Header({
   onToggleDarkMode,
   onExport,
   onImport,
+  onManageGroups,
 }: HeaderProps) {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null)
 
@@ -58,6 +67,18 @@ export default function Header({
             <MoreVert />
           </IconButton>
           <Menu anchorEl={anchorEl} open={Boolean(anchorEl)} onClose={handleMenuClose}>
+            {onManageGroups && (
+              <MenuItem
+                onClick={() => {
+                  onManageGroups()
+                  handleMenuClose()
+                }}
+              >
+                <Button startIcon={<FormatListBulleted />} fullWidth>
+                  管理分组
+                </Button>
+              </MenuItem>
+            )}
             {onExport && (
               <MenuItem
                 onClick={() => {
