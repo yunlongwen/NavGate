@@ -154,7 +154,7 @@ pnpm run dev
 If your changes affect user usage, please update relevant documentation:
 
 - README.md - Project introduction and quick start
-- DEPLOYMENT.md - Deployment guide
+- DEPLOYMENT_MODES.md - Deployment modes & guide
 - ENV_SETUP.md - Environment configuration
 - API documentation - If API is modified
 
@@ -331,7 +331,7 @@ pnpm run dev
 如果你的更改影响了用户使用方式，请更新相关文档：
 
 - README.md - 项目介绍和快速开始
-- DEPLOYMENT.md - 部署指南
+- DEPLOYMENT_MODES.md - 部署模式和指南
 - ENV_SETUP.md - 环境配置说明
 - API 文档 - 如果修改了 API
 
