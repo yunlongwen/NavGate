@@ -7,7 +7,10 @@ import {
   TextField,
   Button,
   Alert,
+  Box,
+  Typography,
 } from '@mui/material'
+import { LockOutlined } from '@mui/icons-material'
 import { login } from '../api'
 
 interface LoginDialogProps {
@@ -42,7 +45,26 @@ export default function LoginDialog({ open, onClose, onLogin }: LoginDialogProps
   return (
     <Dialog open={open} onClose={onClose} maxWidth="xs" fullWidth>
       <form onSubmit={handleSubmit}>
-        <DialogTitle>管理员登录</DialogTitle>
+        <DialogTitle>
+          <Box display="flex" flexDirection="column" alignItems="center" gap={1.5} pt={1}>
+            <Box
+              sx={{
+                width: 48,
+                height: 48,
+                borderRadius: 3,
+                background: 'linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%)',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+              }}
+            >
+              <LockOutlined sx={{ color: '#fff', fontSize: 24 }} />
+            </Box>
+            <Typography variant="h6" fontWeight={600}>
+              管理员登录
+            </Typography>
+          </Box>
+        </DialogTitle>
         <DialogContent>
           {error && (
             <Alert severity="error" sx={{ mb: 2 }}>
@@ -71,9 +93,11 @@ export default function LoginDialog({ open, onClose, onLogin }: LoginDialogProps
             required
           />
         </DialogContent>
-        <DialogActions>
-          <Button onClick={onClose}>取消</Button>
-          <Button type="submit" variant="contained" disabled={loading}>
+        <DialogActions sx={{ px: 3, pb: 3 }}>
+          <Button onClick={onClose} sx={{ mr: 1 }}>
+            取消
+          </Button>
+          <Button type="submit" variant="contained" disabled={loading} sx={{ px: 4 }}>
             {loading ? '登录中...' : '登录'}
           </Button>
         </DialogActions>
