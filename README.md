@@ -26,6 +26,24 @@ An elegant, modern personal website navigation management system with **three de
 - 🔍 **Global Search** - Quick search with `⌘K` / `Ctrl+K`
 - 📂 **Sidebar Navigation** - Collapsible group categories
 
+### 📸 Screenshots
+
+**Navigation Browse** — Clean dark UI with grouped site cards
+
+![Navigation Browse](resource/nav_scan.png)
+
+**Global Search** — Command-palette style quick search (`⌘K` / `Ctrl+K`)
+
+![Global Search](resource/nav_search.png)
+
+**Site Editing** — Admin dialog for adding/editing sites
+
+![Site Editing](resource/nav_edit.png)
+
+**Gist Mode Secrets** — GitHub repository secrets configuration
+
+![Gist Secrets](resource/gist_secrets.png)
+
 ### 🚀 Deployment Modes
 
 | Feature           | localStorage | **Gist** ⭐  | Backend      |
@@ -57,12 +75,6 @@ No code was manually written.
 
 [MIT License](LICENSE)
 
-### ⭐ Star History
-
-[![Star History Chart](https://api.star-history.com/svg?repos=yunlongwen/NavGate&type=Date)](https://star-history.com/#yunlongwen/NavGate&Date)
-
----
-
 <a name="中文"></a>
 
 ## 中文
@@ -84,6 +96,24 @@ No code was manually written.
 - 🔐 **管理员认证** - 登录后才可编辑（可配置）
 - 🔍 **全局搜索** - `⌘K` / `Ctrl+K` 快速搜索
 - 📂 **侧边栏导航** - 可折叠的分组分类
+
+### 📸 截图预览
+
+**导航浏览** — 简洁暗色 UI，分组展示站点卡片
+
+![导航浏览](resource/nav_scan.png)
+
+**全局搜索** — 命令面板风格快速搜索（`⌘K` / `Ctrl+K`）
+
+![全局搜索](resource/nav_search.png)
+
+**站点编辑** — 管理员添加/编辑站点对话框
+
+![站点编辑](resource/nav_edit.png)
+
+**Gist 模式密钥配置** — GitHub 仓库 Secrets 配置
+
+![Gist 密钥配置](resource/gist_secrets.png)
 
 ### 🚀 部署模式
 
