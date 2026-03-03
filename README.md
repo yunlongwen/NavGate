@@ -59,7 +59,7 @@ No code was manually written.
 
 ### ⭐ Star History
 
-If this project helps you, welcome to give it a Star ⭐
+[![Star History Chart](https://api.star-history.com/svg?repos=yunlongwen/NavGate&type=Date)](https://star-history.com/#yunlongwen/NavGate&Date)
 
 ---
 
@@ -118,4 +118,4 @@ If this project helps you, welcome to give it a Star ⭐
 
 ### ⭐ Star History
 
-如果这个项目对你有帮助，欢迎点个 Star ⭐
+[![Star History Chart](https://api.star-history.com/svg?repos=yunlongwen/NavGate&type=Date)](https://star-history.com/#yunlongwen/NavGate&Date)
