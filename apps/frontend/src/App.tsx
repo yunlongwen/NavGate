@@ -3,6 +3,7 @@ import { Container, Box, CircularProgress } from '@mui/material'
 import Header from './components/Header'
 import Navigation from './components/Navigation'
 import ExportImportDialog from './components/ExportImportDialog'
+import GroupManageDialog from './components/GroupManageDialog'
 import { Group, Site, Config } from '@navgate/types'
 import { getGroups, getSites, getConfig, exportData, importData } from './api'
 
@@ -13,6 +14,7 @@ function App() {
   const [loading, setLoading] = useState(true)
   const [darkMode, setDarkMode] = useState(false)
   const [showExportImport, setShowExportImport] = useState(false)
+  const [showGroupManage, setShowGroupManage] = useState(false)
 
   useEffect(() => {
     loadData()
@@ -83,10 +85,17 @@ function App() {
         onToggleDarkMode={toggleDarkMode}
         onExport={handleExport}
         onImport={() => setShowExportImport(true)}
+        onManageGroups={() => setShowGroupManage(true)}
       />
       <Container maxWidth="xl" sx={{ py: 4 }}>
         <Navigation groups={groups} sites={sites} darkMode={darkMode} onDataChange={loadData} />
       </Container>
+      <GroupManageDialog
+        open={showGroupManage}
+        groups={groups}
+        onClose={() => setShowGroupManage(false)}
+        onDataChange={loadData}
+      />
       <ExportImportDialog
         open={showExportImport}
         onClose={() => setShowExportImport(false)}

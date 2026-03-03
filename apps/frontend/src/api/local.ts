@@ -3,8 +3,8 @@ import { storage, generateId, reorderArray } from '@navgate/utils'
 
 // 默认配置
 const DEFAULT_CONFIG: Config = {
-  SITE_TITLE: 'AI Engineer Hub',
-  SITE_DESCRIPTION: 'AI应用工程师的开发导航站',
+  SITE_TITLE: 'Agently',
+  SITE_DESCRIPTION: '个人导航',
 }
 
 // 默认分组数据（AI应用工程师常用）
