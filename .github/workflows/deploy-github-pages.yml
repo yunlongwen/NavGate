@@ -63,6 +63,15 @@ jobs:
           VITE_GIST_ID: ${{ secrets.VITE_GIST_ID }}
           VITE_GITHUB_TOKEN: ${{ secrets.VITE_GITHUB_TOKEN }}
           #
+          # ============================================
+          # 管理员配置 / Admin Configuration
+          # ============================================
+          # 在仓库 Secrets 中添加 / Add to repository Secrets:
+          #   - VITE_ADMIN_USERNAME
+          #   - VITE_ADMIN_PASSWORD
+          VITE_ADMIN_USERNAME: ${{ secrets.VITE_ADMIN_USERNAME }}
+          VITE_ADMIN_PASSWORD: ${{ secrets.VITE_ADMIN_PASSWORD }}
+          #
           # 设置步骤 / Setup Steps:
           # 1. 创建 GitHub Token (gist 权限) / Create GitHub Token (gist scope)
           # 2. 创建 Gist 存储数据 / Create Gist for data storage

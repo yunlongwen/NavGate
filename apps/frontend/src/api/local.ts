@@ -222,10 +222,18 @@ function saveData(data: { groups?: Group[]; sites?: Site[]; config?: Config }) {
 
 // ===== 认证相关 =====
 
+const ADMIN_USERNAME = import.meta.env.VITE_ADMIN_USERNAME || ''
+const ADMIN_PASSWORD = import.meta.env.VITE_ADMIN_PASSWORD || ''
+
 export async function login(credentials: { username: string; password: string }) {
-  // GitHub Pages 模式不验证，直接返回成功
+  if (ADMIN_USERNAME && ADMIN_PASSWORD) {
+    if (credentials.username !== ADMIN_USERNAME || credentials.password !== ADMIN_PASSWORD) {
+      throw new Error('用户名或密码错误')
+    }
+  }
+
   return {
-    token: 'local-storage-token',
+    token: `local-${Date.now()}-${Math.random().toString(36).slice(2)}`,
     username: credentials.username,
   }
 }
