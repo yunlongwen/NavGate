@@ -22,8 +22,8 @@ const GITHUB_TOKEN = import.meta.env.VITE_GITHUB_TOKEN || ''
 
 // 默认配置
 const DEFAULT_CONFIG: Config = {
-  SITE_TITLE: 'AI Engineer Hub',
-  SITE_DESCRIPTION: 'AI应用工程师的开发导航站',
+  SITE_TITLE: 'Agently',
+  SITE_DESCRIPTION: '个人导航',
 }
 
 // 默认分组和站点数据（与 local.ts 相同）

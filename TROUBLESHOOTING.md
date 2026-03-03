@@ -84,8 +84,8 @@ SyntaxError: Unexpected token < in JSON at position 0
   "groups": [],
   "sites": [],
   "config": {
-    "SITE_TITLE": "AI Engineer Hub",
-    "SITE_DESCRIPTION": "AI应用工程师的开发导航站"
+    "SITE_TITLE": "Agently",
+    "SITE_DESCRIPTION": "个人导航"
   }
 }
 ```
@@ -163,8 +163,8 @@ env:
     }
   ],
   "config": {
-    "SITE_TITLE": "AI Engineer Hub",
-    "SITE_DESCRIPTION": "AI应用工程师的开发导航站"
+    "SITE_TITLE": "Agently",
+    "SITE_DESCRIPTION": "个人导航"
   }
 }
 ```

@@ -37,8 +37,8 @@
   "groups": [],
   "sites": [],
   "config": {
-    "SITE_TITLE": "AI Engineer Hub",
-    "SITE_DESCRIPTION": "AI应用工程师的开发导航站"
+    "SITE_TITLE": "Agently",
+    "SITE_DESCRIPTION": "个人导航"
   }
 }
 ```
@@ -215,8 +215,8 @@ VITE_GITHUB_TOKEN=ghp_your_token_here
   "groups": [],
   "sites": [],
   "config": {
-    "SITE_TITLE": "AI Engineer Hub",
-    "SITE_DESCRIPTION": "AI应用工程师的开发导航站"
+    "SITE_TITLE": "Agently",
+    "SITE_DESCRIPTION": "个人导航"
   }
 }
 ```
@@ -597,8 +597,8 @@ Quick steps:
   "groups": [],
   "sites": [],
   "config": {
-    "SITE_TITLE": "AI Engineer Hub",
-    "SITE_DESCRIPTION": "AI应用工程师的开发导航站"
+    "SITE_TITLE": "Agently",
+    "SITE_DESCRIPTION": "个人导航"
   }
 }
 ```
@@ -775,8 +775,8 @@ VITE_GITHUB_TOKEN=ghp_your_token_here
   "groups": [],
   "sites": [],
   "config": {
-    "SITE_TITLE": "AI Engineer Hub",
-    "SITE_DESCRIPTION": "AI应用工程师的开发导航站"
+    "SITE_TITLE": "Agently",
+    "SITE_DESCRIPTION": "个人导航"
   }
 }
 ```
