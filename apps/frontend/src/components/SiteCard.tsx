@@ -1,6 +1,15 @@
 import { useState } from 'react'
-import { Card, CardContent, CardActions, Typography, IconButton, Box, Avatar } from '@mui/material'
-import { Edit, Delete, OpenInNew } from '@mui/icons-material'
+import {
+  Card,
+  CardContent,
+  CardActions,
+  Typography,
+  IconButton,
+  Box,
+  Avatar,
+  Tooltip,
+} from '@mui/material'
+import { Edit, Delete } from '@mui/icons-material'
 import { Site, Group } from '@navgate/types'
 import SiteDialog from './SiteDialog'
 import ConfirmDialog from './ConfirmDialog'
@@ -10,10 +19,11 @@ interface SiteCardProps {
   site: Site
   groups: Group[]
   darkMode: boolean
+  isAdmin: boolean
   onDataChange: () => void
 }
 
-export default function SiteCard({ site, groups, darkMode, onDataChange }: SiteCardProps) {
+export default function SiteCard({ site, groups, darkMode, isAdmin, onDataChange }: SiteCardProps) {
   const [showEditDialog, setShowEditDialog] = useState(false)
   const [showDeleteDialog, setShowDeleteDialog] = useState(false)
 
@@ -58,44 +68,64 @@ export default function SiteCard({ site, groups, darkMode, onDataChange }: SiteC
   return (
     <>
       <Card
+        elevation={0}
         sx={{
           height: '100%',
           display: 'flex',
           flexDirection: 'column',
-          bgcolor: darkMode ? 'grey.800' : 'white',
-          transition: 'all 0.2s',
-          '&:hover': {
-            transform: 'translateY(-4px)',
-            boxShadow: 4,
-          },
+          border: 1,
+          borderColor: darkMode ? 'rgba(255,255,255,0.06)' : 'rgba(0,0,0,0.06)',
+          bgcolor: darkMode ? 'rgba(30,41,59,0.5)' : 'rgba(255,255,255,0.7)',
+          backdropFilter: 'blur(8px)',
+          transition: 'all 0.25s ease',
           cursor: 'pointer',
+          '&:hover': {
+            transform: 'translateY(-2px)',
+            borderColor: 'primary.light',
+            boxShadow: darkMode
+              ? '0 8px 32px rgba(99,102,241,0.12)'
+              : '0 8px 32px rgba(99,102,241,0.08)',
+          },
+          ...(isAdmin && {
+            '& .card-actions': {
+              opacity: { xs: 1, md: 0 },
+              transition: 'opacity 0.2s ease',
+            },
+            '&:hover .card-actions': { opacity: 1 },
+          }),
         }}
         onClick={handleOpenSite}
       >
-        <CardContent sx={{ flexGrow: 1 }}>
-          <Box display="flex" alignItems="center" mb={1}>
+        <CardContent sx={{ flexGrow: 1, p: 2, '&:last-child': { pb: isAdmin ? 1 : 2 } }}>
+          <Box display="flex" alignItems="center" gap={1.5} mb={site.description ? 1 : 0}>
             <Avatar
               src={site.icon || `https://www.google.com/s2/favicons?domain=${site.url}&sz=64`}
               alt={site.name}
-              sx={{ width: 40, height: 40, mr: 1.5 }}
+              variant="rounded"
+              sx={{
+                width: 36,
+                height: 36,
+                borderRadius: 1.5,
+                bgcolor: darkMode ? 'rgba(255,255,255,0.06)' : 'rgba(0,0,0,0.04)',
+              }}
             >
               {site.name[0]}
             </Avatar>
-            <Box flex={1} minWidth={0}>
-              <Typography
-                variant="h6"
-                component="h3"
-                sx={{
-                  fontSize: '1rem',
-                  fontWeight: 600,
-                  overflow: 'hidden',
-                  textOverflow: 'ellipsis',
-                  whiteSpace: 'nowrap',
-                }}
-              >
-                {site.name}
-              </Typography>
-            </Box>
+            <Typography
+              variant="subtitle1"
+              component="h3"
+              sx={{
+                fontWeight: 600,
+                fontSize: '0.95rem',
+                overflow: 'hidden',
+                textOverflow: 'ellipsis',
+                whiteSpace: 'nowrap',
+                flex: 1,
+                minWidth: 0,
+              }}
+            >
+              {site.name}
+            </Typography>
           </Box>
           {site.description && (
             <Typography
@@ -107,52 +137,64 @@ export default function SiteCard({ site, groups, darkMode, onDataChange }: SiteC
                 display: '-webkit-box',
                 WebkitLineClamp: 2,
                 WebkitBoxOrient: 'vertical',
+                fontSize: '0.8rem',
+                lineHeight: 1.5,
+                pl: '48px',
               }}
             >
               {site.description}
             </Typography>
           )}
         </CardContent>
-        <CardActions sx={{ justifyContent: 'flex-end', pt: 0 }}>
-          <IconButton
-            size="small"
-            onClick={e => {
-              e.stopPropagation()
-              setShowEditDialog(true)
-            }}
+        {isAdmin && (
+          <CardActions
+            className="card-actions"
+            sx={{ justifyContent: 'flex-end', pt: 0, pb: 0.5, px: 1 }}
           >
-            <Edit fontSize="small" />
-          </IconButton>
-          <IconButton
-            size="small"
-            onClick={e => {
-              e.stopPropagation()
-              setShowDeleteDialog(true)
-            }}
-          >
-            <Delete fontSize="small" />
-          </IconButton>
-          <IconButton size="small" onClick={handleOpenSite}>
-            <OpenInNew fontSize="small" />
-          </IconButton>
-        </CardActions>
+            <Tooltip title="编辑">
+              <IconButton
+                size="small"
+                onClick={e => {
+                  e.stopPropagation()
+                  setShowEditDialog(true)
+                }}
+              >
+                <Edit sx={{ fontSize: 16 }} />
+              </IconButton>
+            </Tooltip>
+            <Tooltip title="删除">
+              <IconButton
+                size="small"
+                onClick={e => {
+                  e.stopPropagation()
+                  setShowDeleteDialog(true)
+                }}
+              >
+                <Delete sx={{ fontSize: 16 }} />
+              </IconButton>
+            </Tooltip>
+          </CardActions>
+        )}
       </Card>
 
-      <SiteDialog
-        open={showEditDialog}
-        site={site}
-        groups={groups}
-        onClose={() => setShowEditDialog(false)}
-        onSave={handleUpdateSite}
-      />
-
-      <ConfirmDialog
-        open={showDeleteDialog}
-        title="删除站点"
-        message={`确定要删除站点"${site.name}"吗？`}
-        onClose={() => setShowDeleteDialog(false)}
-        onConfirm={handleDeleteSite}
-      />
+      {isAdmin && (
+        <>
+          <SiteDialog
+            open={showEditDialog}
+            site={site}
+            groups={groups}
+            onClose={() => setShowEditDialog(false)}
+            onSave={handleUpdateSite}
+          />
+          <ConfirmDialog
+            open={showDeleteDialog}
+            title="删除站点"
+            message={`确定要删除站点"${site.name}"吗？`}
+            onClose={() => setShowDeleteDialog(false)}
+            onConfirm={handleDeleteSite}
+          />
+        </>
+      )}
     </>
   )
 }
