@@ -1,5 +1,3 @@
-import bcrypt from 'bcrypt'
-import jwt from 'jsonwebtoken'
 import { Request, Response } from 'express'
 
 // 登录
@@ -12,22 +10,21 @@ export async function login(req: Request, res: Response) {
       return res.status(400).json({ error: 'Username and password are required' })
     }
 
+    const configuredUsername = process.env.AUTH_USERNAME || 'admin'
+    const configuredPassword = process.env.AUTH_PASSWORD || ''
+
     // 验证用户名
-    if (username !== process.env.AUTH_USERNAME) {
+    if (username !== configuredUsername) {
       return res.status(401).json({ error: 'Invalid username or password' })
     }
 
-    // 验证密码
-    const isValidPassword = await bcrypt.compare(password, process.env.AUTH_PASSWORD || '')
-
-    if (!isValidPassword) {
+    // 验证密码（明文对比，适用于自用导航站）
+    if (password !== configuredPassword) {
       return res.status(401).json({ error: 'Invalid username or password' })
     }
 
-    // 生成 JWT token
-    const token = jwt.sign({ username }, process.env.JWT_SECRET || 'your-secret-key', {
-      expiresIn: '7d',
-    })
+    // 生成简单的 Base64 token，后续请求通过 Authorization 头携带
+    const token = Buffer.from(`${username}:${password}`, 'utf8').toString('base64')
 
     res.json({
       token,

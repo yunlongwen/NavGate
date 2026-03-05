@@ -1,18 +1,19 @@
 import { Request, Response } from 'express'
-import { PrismaClient } from '@prisma/client'
 import { validateGroupData } from '@navgate/validation'
-
-const prisma = new PrismaClient()
+import {
+  jsonCreateGroup,
+  jsonDeleteGroup,
+  jsonGetGroups,
+  jsonReorderGroups,
+  jsonUpdateGroup,
+} from '../storage/jsonDatabase'
 
 // 获取分组列表
 export async function getGroups(req: Request, res: Response) {
   try {
     const includePrivate = req.query.includePrivate === 'true'
 
-    const groups = await prisma.group.findMany({
-      where: includePrivate ? undefined : { is_public: 1 },
-      orderBy: { order_num: 'asc' },
-    })
+    const groups = await jsonGetGroups(includePrivate)
 
     res.json(groups)
   } catch (error) {
@@ -32,19 +33,7 @@ export async function createGroup(req: Request, res: Response) {
       return res.status(400).json({ error: validation.error })
     }
 
-    // 获取当前最大 order_num
-    const maxOrder = await prisma.group.findFirst({
-      orderBy: { order_num: 'desc' },
-      select: { order_num: true },
-    })
-
-    const newGroup = await prisma.group.create({
-      data: {
-        name,
-        is_public: is_public !== undefined ? (is_public ? 1 : 0) : 1,
-        order_num: (maxOrder?.order_num ?? -1) + 1,
-      },
-    })
+    const newGroup = await jsonCreateGroup({ name, is_public })
 
     res.status(201).json(newGroup)
   } catch (error) {
@@ -65,13 +54,11 @@ export async function updateGroup(req: Request, res: Response) {
       return res.status(400).json({ error: validation.error })
     }
 
-    const updatedGroup = await prisma.group.update({
-      where: { id: parseInt(id) },
-      data: {
-        ...(name !== undefined && { name }),
-        ...(is_public !== undefined && { is_public: is_public ? 1 : 0 }),
-      },
-    })
+    const updatedGroup = await jsonUpdateGroup(parseInt(id), { name, is_public })
+
+    if (!updatedGroup) {
+      return res.status(404).json({ error: 'Group not found' })
+    }
 
     res.json(updatedGroup)
   } catch (error) {
@@ -85,9 +72,10 @@ export async function deleteGroup(req: Request, res: Response) {
   try {
     const { id } = req.params
 
-    await prisma.group.delete({
-      where: { id: parseInt(id) },
-    })
+    const ok = await jsonDeleteGroup(parseInt(id))
+    if (!ok) {
+      return res.status(404).json({ error: 'Group not found' })
+    }
 
     res.status(204).send()
   } catch (error) {
@@ -105,15 +93,7 @@ export async function reorderGroups(req: Request, res: Response) {
       return res.status(400).json({ error: 'Invalid orders array' })
     }
 
-    // 批量更新
-    await prisma.$transaction(
-      orders.map((order: { id: number; order_num: number }) =>
-        prisma.group.update({
-          where: { id: order.id },
-          data: { order_num: order.order_num },
-        })
-      )
-    )
+    await jsonReorderGroups(orders)
 
     res.status(204).send()
   } catch (error) {

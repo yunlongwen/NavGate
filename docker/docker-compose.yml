@@ -3,8 +3,8 @@ version: '3.8'
 services:
   frontend:
     build:
-      context: ../apps/frontend
-      dockerfile: Dockerfile
+      context: ..
+      dockerfile: apps/frontend/Dockerfile
     ports:
       - '80:80'
     depends_on:
@@ -15,35 +15,18 @@ services:
 
   backend:
     build:
-      context: ../apps/server
-      dockerfile: Dockerfile
+      context: ..
+      dockerfile: apps/server/Dockerfile
     ports:
       - '3000:3000'
     environment:
       - NODE_ENV=production
       - PORT=3000
-      - DATABASE_URL=mysql://root:${DB_PASSWORD}@db:3306/navgate
-      - JWT_SECRET=${JWT_SECRET}
-      - AUTH_USERNAME=${AUTH_USERNAME}
-      - AUTH_PASSWORD=${AUTH_PASSWORD}
-    depends_on:
-      - db
+      - AUTH_USERNAME=${AUTH_USERNAME:-admin}
+      - AUTH_PASSWORD=${AUTH_PASSWORD:-admin123}
+      - JSON_DB_PATH=/app/data/nav-data.json
     volumes:
-      - backend_dist:/app/dist
-
-  db:
-    image: mysql:8.0
-    restart: always
-    environment:
-      - MYSQL_ROOT_PASSWORD=${DB_PASSWORD}
-      - MYSQL_DATABASE=navgate
-    volumes:
-      - mysql_data:/var/lib/mysql
-      - ./scripts/init-mysql.sql:/docker-entrypoint-initdb.d/init.sql
-    ports:
-      - '3306:3306'
-    command: --default-authentication-plugin=mysql_native_password
+      - server_data:/app/data
 
 volumes:
-  mysql_data:
-  backend_dist:
+  server_data:
