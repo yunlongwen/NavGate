@@ -195,6 +195,8 @@ function App() {
       <CssBaseline />
       <Box
         sx={{
+          display: 'flex',
+          flexDirection: 'column',
           minHeight: '100vh',
           bgcolor: 'background.default',
           transition: 'background-color 0.3s ease',
@@ -215,17 +217,19 @@ function App() {
           onManageGroups={() => setShowGroupManage(true)}
         />
 
-        <Container maxWidth="xl" sx={{ py: 4 }}>
-          <Navigation
-            groups={groups}
-            sites={sites}
-            darkMode={darkMode}
-            isAdmin={isAdmin}
-            navigateToGroupId={navigateGroupId}
-            onNavigateComplete={handleNavigateComplete}
-            onDataChange={loadData}
-          />
-        </Container>
+        <Box sx={{ flexGrow: 1 }}>
+          <Container maxWidth="xl" sx={{ py: 4 }}>
+            <Navigation
+              groups={groups}
+              sites={sites}
+              darkMode={darkMode}
+              isAdmin={isAdmin}
+              navigateToGroupId={navigateGroupId}
+              onNavigateComplete={handleNavigateComplete}
+              onDataChange={loadData}
+            />
+          </Container>
+        </Box>
 
         <Footer config={config} darkMode={darkMode} />
 

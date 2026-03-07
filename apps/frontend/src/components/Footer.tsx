@@ -25,8 +25,8 @@ export default function Footer({ config, darkMode }: FooterProps) {
         py: 3,
         borderTop: 1,
         borderColor: darkMode ? 'rgba(255,255,255,0.06)' : 'rgba(0,0,0,0.06)',
-        bgcolor: darkMode ? 'rgba(15,23,42,0.5)' : 'rgba(255,255,255,0.5)',
-        mt: 'auto',
+        bgcolor: darkMode ? 'rgba(15,23,42,0.8)' : 'rgba(255,255,255,0.8)',
+        backdropFilter: 'blur(8px)',
       }}
     >
       <Container maxWidth="xl">
