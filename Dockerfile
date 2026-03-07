@@ -28,6 +28,9 @@ COPY apps/server/tsconfig.json ./apps/server/tsconfig.json
 # 安装依赖
 RUN pnpm install --frozen-lockfile
 
+# 检查依赖安装情况
+RUN ls -la node_modules/.bin
+
 # 构建前端
 WORKDIR /app/apps/frontend
 RUN pnpm build
