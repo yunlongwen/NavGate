@@ -13,10 +13,7 @@ COPY packages ./packages
 COPY apps/frontend/package.json ./apps/frontend/package.json
 COPY apps/server/package.json ./apps/server/package.json
 
-# 安装依赖
-RUN pnpm install --frozen-lockfile --ignore-scripts
-
-# 复制前端源代码并构建
+# 复制前端源代码
 COPY apps/frontend/src ./apps/frontend/src
 COPY apps/frontend/index.html ./apps/frontend/index.html
 COPY apps/frontend/vite.config.ts ./apps/frontend/vite.config.ts
@@ -24,14 +21,18 @@ COPY apps/frontend/tsconfig.json ./apps/frontend/tsconfig.json
 COPY apps/frontend/tsconfig.app.json ./apps/frontend/tsconfig.app.json
 COPY apps/frontend/src/vite-env.d.ts ./apps/frontend/src/vite-env.d.ts
 
-WORKDIR /app/apps/frontend
-RUN pnpm build
-
-# 复制后端源代码并构建
-WORKDIR /app
+# 复制后端源代码
 COPY apps/server/src ./apps/server/src
 COPY apps/server/tsconfig.json ./apps/server/tsconfig.json
 
+# 安装依赖
+RUN pnpm install --frozen-lockfile
+
+# 构建前端
+WORKDIR /app/apps/frontend
+RUN pnpm build
+
+# 构建后端
 WORKDIR /app/apps/server
 RUN pnpm build
 

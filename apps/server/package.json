@@ -5,10 +5,10 @@
   "description": "NavGate 后端服务器 - Express.js + JSON File Storage",
   "scripts": {
     "dev": "tsx watch src/index.ts",
-    "build": "tsc",
+    "build": "npx tsc",
     "start": "node dist/index.js",
     "lint": "eslint .",
-    "type-check": "tsc --noEmit"
+    "type-check": "npx tsc --noEmit"
   },
   "dependencies": {
     "@navgate/types": "workspace:*",

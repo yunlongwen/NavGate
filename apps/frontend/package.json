@@ -5,10 +5,10 @@
   "description": "NavGate 前端应用 - React + Vite",
   "scripts": {
     "dev": "vite",
-    "build": "tsc -b && vite build",
+    "build": "npx tsc -b && npx vite build",
     "preview": "vite preview",
     "lint": "eslint .",
-    "type-check": "tsc --noEmit",
+    "type-check": "npx tsc --noEmit",
     "test": "vitest",
     "deploy": "gh-pages -d apps/frontend/dist"
   },
