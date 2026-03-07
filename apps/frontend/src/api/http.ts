@@ -3,7 +3,7 @@ import { Group, Site, Config, LoginCredentials, LoginResponse } from '@navgate/t
 const API_BASE = '/api'
 
 function getAuthHeaders(): HeadersInit {
-  const token = localStorage.getItem('auth_token')
+  const token = localStorage.getItem('navgate_auth_token')
   return {
     'Content-Type': 'application/json',
     ...(token && { Authorization: `Bearer ${token}` }),

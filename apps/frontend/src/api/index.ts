@@ -29,9 +29,9 @@ export const login = async (credentials: LoginCredentials): Promise<LoginRespons
   return api.login(credentials)
 }
 
-export const getGroups = async (): Promise<Group[]> => {
+export const getGroups = async (includePrivate = false): Promise<Group[]> => {
   const api = await getApi()
-  return api.getGroups()
+  return api.getGroups(includePrivate)
 }
 
 export const createGroup = async (name: string, isPublic?: boolean): Promise<Group> => {

@@ -1,0 +1,268 @@
+{
+  "groups": [
+    {
+      "id": 1,
+      "name": "AI 编程1",
+      "order_num": 0,
+      "is_public": 1,
+      "created_at": "2024-01-01T00:00:00.000Z",
+      "updated_at": "2026-03-03T11:08:38.028Z"
+    },
+    {
+      "id": 1772535849351,
+      "name": "科学上网",
+      "order_num": 1,
+      "is_public": 1,
+      "created_at": "2026-03-03T11:04:09.351Z",
+      "updated_at": "2026-03-03T11:04:09.351Z"
+    },
+    {
+      "id": 1772535887623,
+      "name": "AI资讯",
+      "order_num": 2,
+      "is_public": 1,
+      "created_at": "2026-03-03T11:04:47.623Z",
+      "updated_at": "2026-03-03T11:04:47.623Z"
+    },
+    {
+      "id": 1772536125371,
+      "name": "AI 智能体",
+      "order_num": 3,
+      "is_public": 0,
+      "created_at": "2026-03-03T11:08:45.371Z",
+      "updated_at": "2026-03-03T11:08:45.371Z"
+    },
+    {
+      "id": 1772536535791,
+      "name": "开发工具",
+      "order_num": 4,
+      "is_public": 1,
+      "created_at": "2026-03-03T11:15:35.791Z",
+      "updated_at": "2026-03-03T11:15:35.791Z"
+    },
+    {
+      "id": 1772584649108,
+      "name": "常用工具",
+      "order_num": 5,
+      "is_public": 1,
+      "created_at": "2026-03-04T00:37:29.108Z",
+      "updated_at": "2026-03-04T00:37:43.733Z"
+    },
+    {
+      "id": 1772584649110,
+      "name": "111",
+      "is_public": 1,
+      "order_num": 6
+    }
+  ],
+  "sites": [
+    {
+      "id": 101,
+      "group_id": 1,
+      "name": "Cursor",
+      "url": "https://cursor.sh",
+      "description": "AI-powered code editor",
+      "icon": "https://cursor.sh/favicon.ico",
+      "order_num": 0,
+      "is_public": 1,
+      "created_at": "2024-01-01T00:00:00.000Z",
+      "updated_at": "2024-01-01T00:00:00.000Z"
+    },
+    {
+      "name": "AICoding基地",
+      "url": "https://devmaster.cn/",
+      "description": "AI 编程工具导航与资源聚合平台，收录热门 AI 开发工具，最新的AI资讯",
+      "icon": "",
+      "group_id": 1772535887623,
+      "is_public": 1,
+      "order_num": 0,
+      "id": 1772535925206,
+      "created_at": "2026-03-03T11:05:25.206Z",
+      "updated_at": "2026-03-03T11:07:26.150Z"
+    },
+    {
+      "name": "openclaw",
+      "url": "https://openclaw.ai/",
+      "description": "OpenClaw 是 2026 年初爆火的开源本地优先 AI 智能体，前身为 Clawdbot、Moltbot，由 Peter Steinberger 开发。它主打 “能真正执行任务”，可通过聊天软件交互，自主调用浏览器、文件、终端等工具完成办公与自动化操作。数据本地存储、隐私可控，支持多模型接入与插件扩展，是可自托管的个人 AI 数字助手。",
+      "icon": "",
+      "group_id": 1772536125371,
+      "is_public": 1,
+      "order_num": 0,
+      "id": 1772536154672,
+      "created_at": "2026-03-03T11:09:14.672Z",
+      "updated_at": "2026-03-03T11:09:14.672Z"
+    },
+    {
+      "name": "贝贝云",
+      "url": "https://666.beibei.cloud",
+      "description": "高性价比网络加速服务，Shadowsocks 协议，20+ 节点覆盖港台日美新等地区，支持流媒体解锁与 ChatGPT 访问",
+      "icon": "",
+      "group_id": 1772535849351,
+      "is_public": 1,
+      "order_num": 0,
+      "id": 1772536434612,
+      "created_at": "2026-03-03T11:13:54.612Z",
+      "updated_at": "2026-03-03T11:13:54.612Z"
+    },
+    {
+      "name": "轩辕镜像",
+      "url": "https://xuanyuan.cloud/",
+      "description": "Docker 镜像加速拉取服务，支持 Docker Hub/GCR/GHCR 等主流仓库，按量计费，一键配置",
+      "icon": "",
+      "group_id": 1772536535791,
+      "is_public": 1,
+      "order_num": 0,
+      "id": 1772536554905,
+      "created_at": "2026-03-03T11:15:54.905Z",
+      "updated_at": "2026-03-03T11:15:54.905Z"
+    },
+    {
+      "name": "科技爱好者周刊",
+      "url": "https://github.com/ruanyf/weekly",
+      "description": "阮一峰的科技周刊，每周五发布，分享值得关注的科技内容、开源项目与开发资源，85k+ Star",
+      "icon": "https://avatars.githubusercontent.com/u/905434?v=4",
+      "group_id": 1772535887623,
+      "is_public": 1,
+      "order_num": 1,
+      "id": 1772536672162,
+      "created_at": "2026-03-03T11:17:52.162Z",
+      "updated_at": "2026-03-03T11:18:17.697Z"
+    },
+    {
+      "name": "随机转盘",
+      "url": "https://wheelpage.com/",
+      "description": "免费随机转盘，让决策变得简单有趣，无论是抽奖、游戏还是日常选择。",
+      "icon": "",
+      "group_id": 1772584649108,
+      "is_public": 1,
+      "order_num": 0,
+      "id": 1772584735609,
+      "created_at": "2026-03-04T00:38:55.609Z",
+      "updated_at": "2026-03-04T00:38:55.609Z"
+    },
+    {
+      "name": "网站流量分析",
+      "url": "https://sitedata.dev",
+      "description": "即时分析网站流量,发现AdSense网络,并揭示SEO机会 TrafficWHOISRDAPAdSense 分析",
+      "icon": "",
+      "group_id": 1772536535791,
+      "is_public": 1,
+      "order_num": 1,
+      "id": 1772584936552,
+      "created_at": "2026-03-04T00:42:16.552Z",
+      "updated_at": "2026-03-04T00:42:16.552Z"
+    },
+    {
+      "name": "AI资讯日报",
+      "url": "https://ai.hubtoday.app/",
+      "description": "每日精选 AI 领域的最新动态，包括行业新闻、热门开源项目、前沿学术论文、科技大V社交媒体言论，并通过 Google Gemini 模型进行智能处理与摘要生成 - 后端项目 与 配套前端项目。",
+      "icon": "",
+      "group_id": 1772535887623,
+      "is_public": 1,
+      "order_num": 2,
+      "id": 1772585407354,
+      "created_at": "2026-03-04T00:50:07.354Z",
+      "updated_at": "2026-03-04T00:50:07.354Z"
+    },
+    {
+      "name": "Folo",
+      "url": "https://app.folo.is/",
+      "description": "一个开放的信息交流平台",
+      "icon": "",
+      "group_id": 1772535887623,
+      "is_public": 1,
+      "order_num": 2,
+      "id": 1772586200674,
+      "created_at": "2026-03-04T01:03:20.674Z",
+      "updated_at": "2026-03-04T01:03:20.674Z"
+    },
+    {
+      "name": "AI今日 热榜",
+      "url": "https://aihot.today/",
+      "description": "汇集全球顶尖来源的最新 AI 新闻、研究和趋势，为您节省宝贵时间",
+      "icon": "",
+      "group_id": 1772535887623,
+      "is_public": 1,
+      "order_num": 4,
+      "id": 1772587067725,
+      "created_at": "2026-03-04T01:17:47.725Z",
+      "updated_at": "2026-03-04T01:17:47.725Z"
+    },
+    {
+      "name": "技术教育社区",
+      "url": "https://www.teccses.org/",
+      "description": "能下载到全网99%电子书的网站",
+      "icon": "",
+      "group_id": 1772584649108,
+      "is_public": 1,
+      "order_num": 1,
+      "id": 1772588953937,
+      "created_at": "2026-03-04T01:49:13.937Z",
+      "updated_at": "2026-03-04T01:49:13.937Z"
+    },
+    {
+      "name": "PDF-To-Markdown Converter",
+      "url": "https://pdf2md.morethan.io/",
+      "description": "用于解析 PDF 文件并将其转换为 Markdown 格式的 Javascript 工具",
+      "icon": "",
+      "group_id": 1772536535791,
+      "is_public": 1,
+      "order_num": 2,
+      "id": 1772598347440,
+      "created_at": "2026-03-04T04:25:47.440Z",
+      "updated_at": "2026-03-04T04:25:47.440Z"
+    },
+    {
+      "name": "缤纷云",
+      "url": "https://www.bitiful.com/",
+      "description": "高性能对象存储 + CDN",
+      "icon": "",
+      "group_id": 1772536535791,
+      "is_public": 1,
+      "order_num": 3,
+      "id": 1772631487199,
+      "created_at": "2026-03-04T13:38:07.199Z",
+      "updated_at": "2026-03-04T13:38:07.199Z"
+    },
+    {
+      "name": "海懒",
+      "url": "https://api.haita.io/",
+      "description": "VPN",
+      "icon": "",
+      "group_id": 1772535849351,
+      "is_public": 1,
+      "order_num": 1,
+      "id": 1772634342879,
+      "created_at": "2026-03-04T14:25:42.879Z",
+      "updated_at": "2026-03-04T14:25:42.879Z"
+    },
+    {
+      "name": "账号鸭",
+      "url": "https://www.zhanghaoya.com/",
+      "description": "账号交易",
+      "icon": "",
+      "group_id": 1772584649108,
+      "is_public": 1,
+      "order_num": 2,
+      "id": 1772672861125,
+      "created_at": "2026-03-05T01:07:41.125Z",
+      "updated_at": "2026-03-05T01:07:41.125Z"
+    },
+    {
+      "id": 1772672861126,
+      "group_id": 1772536125371,
+      "name": "1w",
+      "url": "https://www.baidu.com",
+      "icon": "",
+      "description": "www.baidu.com",
+      "is_public": 1,
+      "order_num": 1
+    }
+  ],
+  "config": {
+    "SITE_TITLE": "Agently",
+    "SITE_DESCRIPTION": "AI Agent 导航网站"
+  },
+  "nextGroupId": 1772584649111,
+  "nextSiteId": 1772672861127
+}

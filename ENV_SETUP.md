@@ -12,15 +12,14 @@ This document details the configuration and usage of various environment variabl
 
 ### 📋 Environment Variables Overview
 
-| Variable Name      | Description                | Required | Default      | Mode    |
-| ------------------ | -------------------------- | -------- | ------------ | ------- |
-| `VITE_DEPLOY_MODE` | Deployment mode            | ✅       | github-pages | All     |
-| `DATABASE_URL`     | MySQL connection string    | ❌       | -            | Backend |
-| `JWT_SECRET`       | JWT secret key             | ❌       | -            | Backend |
-| `AUTH_USERNAME`    | Admin username             | ❌       | admin        | Backend |
-| `AUTH_PASSWORD`    | Admin password (encrypted) | ❌       | -            | Backend |
-| `PORT`             | Backend service port       | ❌       | 3000         | Backend |
-| `NODE_ENV`         | Runtime environment        | ❌       | development  | Backend |
+| Variable Name      | Description     | Required | Default      | Mode |
+| ------------------ | --------------- | -------- | ------------ | ---- |
+| `VITE_DEPLOY_MODE` | Deployment mode | ✅       | github-pages | All  |
+
+| `AUTH_USERNAME` | Admin username | ❌ | admin | Backend |
+| `AUTH_PASSWORD` | Admin password (encrypted) | ❌ | - | Backend |
+| `PORT` | Backend service port | ❌ | 3000 | Backend |
+| `NODE_ENV` | Runtime environment | ❌ | development | Backend |
 
 ---
 
@@ -65,87 +64,7 @@ environment:
 
 ---
 
-### 🗄️ Database Configuration
-
-#### DATABASE_URL
-
-MySQL database connection string, only required when `VITE_DEPLOY_MODE=backend`.
-
-**Format:**
-
-```
-mysql://[user]:[password]@[host]:[port]/[database]
-```
-
-**Examples:**
-
-```env
-# Local MySQL
-DATABASE_URL=mysql://root:password123@localhost:3306/navgate
-
-# Remote MySQL (RDS)
-DATABASE_URL=mysql://navgate:securepassword@rm-xxxxx.mysql.rds.aliyuncs.com:3306/navgate
-
-# Docker Compose
-DATABASE_URL=mysql://root:${DB_PASSWORD}@db:3306/navgate
-```
-
-**Parameter description:**
-
-- `user` - Database username
-- `password` - Database password
-- `host` - Database host address
-- `port` - Database port (default 3306)
-- `database` - Database name
-
-**Docker Compose special configuration:**
-
-In `docker/docker-compose.yml`, the database URL uses Docker service name:
-
-```yaml
-environment:
-  - DATABASE_URL=mysql://root:${DB_PASSWORD}@db:3306/navgate
-```
-
----
-
 ### 🔐 Authentication Configuration
-
-#### JWT_SECRET
-
-Secret key string for signing and verifying JWT tokens, only required when `VITE_DEPLOY_MODE=backend`.
-
-**Requirements:**
-
-- At least 32 characters long
-- Contains letters, numbers, and special characters
-- Do not hardcode in code
-
-**Generation methods:**
-
-```bash
-# Method 1: Using Node.js
-node -e "console.log(require('crypto').randomBytes(32).toString('hex'))"
-
-# Method 2: Using OpenSSL
-openssl rand -hex 32
-
-# Method 3: Online generation
-# https://generate-secret.vercel.app/32
-```
-
-**Example:**
-
-```env
-JWT_SECRET=super-secret-jwt-key-change-this-please
-```
-
-**Security recommendations:**
-
-- Do not hardcode in code
-- Do not commit to Git repository
-- Rotate keys regularly
-- Use environment variable management tools (e.g., AWS Secrets Manager)
 
 #### AUTH_USERNAME
 
@@ -362,10 +281,8 @@ VITE_DEPLOY_MODE=github-pages
 VITE_DEPLOY_MODE=backend
 
 # Database configuration
-DATABASE_URL=mysql://root:password@localhost:3306/navgate
 
-# JWT configuration
-JWT_SECRET=your-super-secret-jwt-key-change-this
+
 
 # Authentication configuration
 AUTH_USERNAME=myadmin
@@ -383,7 +300,6 @@ NODE_ENV=development
 ```env
 # Docker Compose automatically sets the following variables
 DB_PASSWORD=your-mysql-root-password
-JWT_SECRET=your-super-secret-jwt-key
 AUTH_USERNAME=myadmin
 AUTH_PASSWORD=$2a$10$abcdefghijklmnopqrstuvwxyz1234567890
 ```
@@ -395,10 +311,8 @@ AUTH_PASSWORD=$2a$10$abcdefghijklmnopqrstuvwxyz1234567890
 VITE_DEPLOY_MODE=backend
 
 # Database configuration (using RDS)
-DATABASE_URL=mysql://navgate:securepassword@rm-xxxxx.mysql.rds.aliyuncs.com:3306/navgate
 
-# JWT configuration
-JWT_SECRET=your-super-secret-jwt-key-change-this
+
 
 # Authentication configuration
 AUTH_USERNAME=myadmin
@@ -421,11 +335,9 @@ ALIYUN_ECS_SSH_KEY=/path/to/your/ssh/key.pem
    - Use environment variable management tools
 
 2. **Use strong keys and passwords**
-   - JWT_SECRET at least 32 characters
    - Password at least 12 characters, including uppercase, lowercase, numbers and special characters
 
 3. **Rotate keys regularly**
-   - Change JWT_SECRET every 3-6 months
    - Change database password regularly
 
 4. **Limit permissions**
@@ -453,15 +365,14 @@ ALIYUN_ECS_SSH_KEY=/path/to/your/ssh/key.pem
 
 ### 📋 环境变量总览
 
-| 变量名             | 说明               | 必需 | 默认值       | 适用模式 |
-| ------------------ | ------------------ | ---- | ------------ | -------- |
-| `VITE_DEPLOY_MODE` | 部署模式           | ✅   | github-pages | 所有     |
-| `DATABASE_URL`     | MySQL 连接字符串   | ❌   | -            | 后端     |
-| `JWT_SECRET`       | JWT 密钥           | ❌   | -            | 后端     |
-| `AUTH_USERNAME`    | 管理员用户名       | ❌   | admin        | 后端     |
-| `AUTH_PASSWORD`    | 管理员密码（加密） | ❌   | -            | 后端     |
-| `PORT`             | 后端服务端口       | ❌   | 3000         | 后端     |
-| `NODE_ENV`         | 运行环境           | ❌   | development  | 后端     |
+| 变量名             | 说明     | 必需 | 默认值       | 适用模式 |
+| ------------------ | -------- | ---- | ------------ | -------- |
+| `VITE_DEPLOY_MODE` | 部署模式 | ✅   | github-pages | 所有     |
+
+| `AUTH_USERNAME` | 管理员用户名 | ❌ | admin | 后端 |
+| `AUTH_PASSWORD` | 管理员密码（加密） | ❌ | - | 后端 |
+| `PORT` | 后端服务端口 | ❌ | 3000 | 后端 |
+| `NODE_ENV` | 运行环境 | ❌ | development | 后端 |
 
 ---
 
@@ -506,80 +417,7 @@ environment:
 
 ---
 
-### 🗄️ 数据库配置
-
-#### DATABASE_URL
-
-MySQL 数据库连接字符串，仅在 `VITE_DEPLOY_MODE=backend` 时需要。
-
-**格式：**
-
-```
-mysql://[user]:[password]@[host]:[port]/[database]
-```
-
-**示例：**
-
-```env
-# 本地 MySQL
-DATABASE_URL=mysql://root:password123@localhost:3306/navgate
-
-# 远程 MySQL（RDS）
-DATABASE_URL=mysql://navgate:securepassword@rm-xxxxx.mysql.rds.aliyuncs.com:3306/navgate
-
-# Docker Compose
-DATABASE_URL=mysql://root:${DB_PASSWORD}@db:3306/navgate
-```
-
-**参数说明：**
-
-- `user` - 数据库用户名
-- `password` - 数据库密码
-- `host` - 数据库主机地址
-- `port` - 数据库端口（默认 3306）
-- `database` - 数据库名称
-
-**Docker Compose 特殊配置：**
-
-在 `docker/docker-compose.yml` 中，数据库 URL 使用 Docker 服务名称：
-
-```yaml
-environment:
-  - DATABASE_URL=mysql://root:${DB_PASSWORD}@db:3306/navgate
-```
-
----
-
 ### 🔐 认证配置
-
-#### JWT_SECRET
-
-用于签名和验证 JWT token 的密钥字符串，仅在 `VITE_DEPLOY_MODE=backend` 时需要。
-
-**要求：**
-
-- 长度至少 32 个字符
-- 包含字母、数字和特殊字符
-- 不要在代码中硬编码
-
-**生成方法：**
-
-```bash
-# 方式 1：使用 Node.js
-node -e "console.log(require('crypto').randomBytes(32).toString('hex'))"
-
-# 方式 2：使用 OpenSSL
-openssl rand -hex 32
-
-# 方式 3：在线生成
-# https://generate-secret.vercel.app/32
-```
-
-**示例：**
-
-```env
-JWT_SECRET=super-secret-jwt-key-change-this-please
-```
 
 **安全建议：**
 
@@ -803,10 +641,10 @@ VITE_DEPLOY_MODE=github-pages
 VITE_DEPLOY_MODE=backend
 
 # 数据库配置
-DATABASE_URL=mysql://root:password@localhost:3306/navgate
+
 
 # JWT 配置
-JWT_SECRET=your-super-secret-jwt-key-change-this
+
 
 # 认证配置
 AUTH_USERNAME=myadmin
@@ -824,7 +662,6 @@ NODE_ENV=development
 ```env
 # Docker Compose 会自动设置以下变量
 DB_PASSWORD=your-mysql-root-password
-JWT_SECRET=your-super-secret-jwt-key
 AUTH_USERNAME=myadmin
 AUTH_PASSWORD=$2a$10$abcdefghijklmnopqrstuvwxyz1234567890
 ```
@@ -836,10 +673,10 @@ AUTH_PASSWORD=$2a$10$abcdefghijklmnopqrstuvwxyz1234567890
 VITE_DEPLOY_MODE=backend
 
 # 数据库配置（使用 RDS）
-DATABASE_URL=mysql://navgate:securepassword@rm-xxxxx.mysql.rds.aliyuncs.com:3306/navgate
+
 
 # JWT 配置
-JWT_SECRET=your-super-secret-jwt-key-change-this
+
 
 # 认证配置
 AUTH_USERNAME=myadmin
@@ -862,11 +699,9 @@ ALIYUN_ECS_SSH_KEY=/path/to/your/ssh/key.pem
    - 使用环境变量管理工具
 
 2. **使用强密钥和密码**
-   - JWT_SECRET 至少 32 个字符
    - 密码至少 12 位，包含大小写字母、数字和特殊字符
 
 3. **定期轮换密钥**
-   - 每 3-6 个月更换 JWT_SECRET
    - 定期更换数据库密码
 
 4. **限制权限**

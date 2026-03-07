@@ -240,9 +240,12 @@ export async function login(credentials: { username: string; password: string })
 
 // ===== 分组相关 =====
 
-export async function getGroups(): Promise<Group[]> {
+export async function getGroups(includePrivate = false): Promise<Group[]> {
   const { groups } = getData()
-  return groups
+  if (includePrivate) {
+    return groups
+  }
+  return groups.filter(group => group.is_public)
 }
 
 export async function createGroup(name: string, isPublic = true): Promise<Group> {
@@ -303,12 +306,19 @@ export async function reorderGroups(
 
 // ===== 站点相关 =====
 
-export async function getSites(groupId?: number): Promise<Site[]> {
+export async function getSites(groupId?: number, includePrivate = false): Promise<Site[]> {
   const { sites } = getData()
+  let filteredSites = sites
+
   if (groupId !== undefined) {
-    return sites.filter(s => s.group_id === groupId)
+    filteredSites = filteredSites.filter(s => s.group_id === groupId)
   }
-  return sites
+
+  if (!includePrivate) {
+    filteredSites = filteredSites.filter(s => s.is_public)
+  }
+
+  return filteredSites
 }
 
 export async function createSite(

@@ -333,8 +333,7 @@ VITE_API_BASE_URL=http://your-server.com:3000
 **Backend:**
 
 ```bash
-DATABASE_URL=mysql://user:password@localhost:3306/navgate
-JWT_SECRET=your-secret-key
+
 AUTH_USERNAME=admin
 AUTH_PASSWORD=hashed-password
 ```
@@ -467,8 +466,7 @@ Quick steps:
 
    ```bash
    # Backend .env
-   DATABASE_URL="mysql://user:password@localhost:3306/navgate"
-   JWT_SECRET="your-secret-key"
+
    AUTH_USERNAME="admin"
    AUTH_PASSWORD="$2b$10$..."
    ```
@@ -501,7 +499,7 @@ Edit `.env` file:
 
 ```env
 DB_PASSWORD=your-mysql-root-password
-JWT_SECRET=your-super-secret-jwt-key
+
 AUTH_USERNAME=admin
 AUTH_PASSWORD=$2a$10$abcdefghijklmnopqrstuvwxyz
 ```
@@ -941,8 +939,7 @@ VITE_API_BASE_URL=http://your-server.com:3000
 **后端：**
 
 ```bash
-DATABASE_URL=mysql://user:password@localhost:3306/navgate
-JWT_SECRET=your-secret-key
+
 AUTH_USERNAME=admin
 AUTH_PASSWORD=hashed-password
 ```
@@ -1075,8 +1072,7 @@ git push origin master
 
    ```bash
    # 后端 .env
-   DATABASE_URL="mysql://user:password@localhost:3306/navgate"
-   JWT_SECRET="your-secret-key"
+
    AUTH_USERNAME="admin"
    AUTH_PASSWORD="$2b$10$..."
    ```
@@ -1109,7 +1105,7 @@ git push origin master
 
 ```env
 DB_PASSWORD=your-mysql-root-password
-JWT_SECRET=your-super-secret-jwt-key
+
 AUTH_USERNAME=admin
 AUTH_PASSWORD=$2a$10$abcdefghijklmnopqrstuvwxyz
 ```
@@ -1231,14 +1227,13 @@ pnpm run deploy:aliyun
 
 ### Backend Variables | 后端变量
 
-| Variable        | Required | Description                 | Example                               |
-| --------------- | -------- | --------------------------- | ------------------------------------- |
-| `DATABASE_URL`  | Yes      | MySQL connection string     | `mysql://user:pass@host:3306/navgate` |
-| `JWT_SECRET`    | Yes      | JWT signing secret          | `your-super-secret-key`               |
-| `AUTH_USERNAME` | Yes      | Admin username              | `admin`                               |
-| `AUTH_PASSWORD` | Yes      | Bcrypt hashed password      | `$2b$10$...`                          |
-| `PORT`          | No       | Server port (default: 3000) | `3000`                                |
-| `NODE_ENV`      | No       | Environment                 | `development`, `production`           |
+| Variable | Required | Description | Example |
+| -------- | -------- | ----------- | ------- |
+
+| `AUTH_USERNAME` | Yes | Admin username | `admin` |
+| `AUTH_PASSWORD` | Yes | Bcrypt hashed password | `$2b$10$...` |
+| `PORT` | No | Server port (default: 3000) | `3000` |
+| `NODE_ENV` | No | Environment | `development`, `production` |
 
 ---
 
@@ -1258,7 +1253,6 @@ pnpm run deploy:aliyun
 
 3. **Use strong secrets**  
    **使用强密钥**
-   - JWT_SECRET: At least 32 random characters / 至少 32 个随机字符
    - GitHub Token: Minimal permissions (only `gist`) / 最小权限（仅 `gist`）
 
 4. **Rotate tokens regularly**  

@@ -1,24 +1,10 @@
 version: '3.8'
 
 services:
-  frontend:
-    build:
-      context: ..
-      dockerfile: apps/frontend/Dockerfile
+  navgate:
+    image: navgate:latest
     ports:
       - '80:80'
-    depends_on:
-      - backend
-    environment:
-      - VITE_DEPLOY_MODE=backend
-      - VITE_API_BASE_URL=http://localhost:3000/api
-
-  backend:
-    build:
-      context: ..
-      dockerfile: apps/server/Dockerfile
-    ports:
-      - '3000:3000'
     environment:
       - NODE_ENV=production
       - PORT=3000
@@ -26,7 +12,7 @@ services:
       - AUTH_PASSWORD=${AUTH_PASSWORD:-admin123}
       - JSON_DB_PATH=/app/data/nav-data.json
     volumes:
-      - server_data:/app/data
+      - navgate_data:/app/data
 
 volumes:
-  server_data:
+  navgate_data:

@@ -1,13 +1,14 @@
 import bcrypt from 'bcrypt'
+import * as readline from 'readline'
 
-const readline = require('readline').createInterface({
+const rl = readline.createInterface({
   input: process.stdin,
   output: process.stdout,
 })
 
 function question(query) {
   return new Promise(resolve => {
-    readline.question(query, answer => {
+    rl.question(query, answer => {
       resolve(answer)
     })
   })
@@ -22,13 +23,13 @@ async function hashPassword() {
 
   if (password !== confirm) {
     console.log('\n❌ 两次输入的密码不一致！')
-    readline.close()
+    rl.close()
     process.exit(1)
   }
 
   if (password.length < 8) {
     console.log('\n❌ 密码长度至少为 8 位！')
-    readline.close()
+    rl.close()
     process.exit(1)
   }
 
@@ -53,11 +54,11 @@ async function hashPassword() {
     console.log('- 原始密码无法从加密密码恢复')
   } catch (error) {
     console.error('\n❌ 加密失败：', error)
-    readline.close()
+    rl.close()
     process.exit(1)
   }
 
-  readline.close()
+  rl.close()
 }
 
 hashPassword()

@@ -117,8 +117,8 @@ function App() {
     try {
       setLoading(true)
       const [groupsData, sitesData, configData] = await Promise.all([
-        getGroups(),
-        getSites(),
+        getGroups(isAdmin),
+        getSites(undefined, isAdmin),
         getConfig(),
       ])
       setGroups(groupsData)

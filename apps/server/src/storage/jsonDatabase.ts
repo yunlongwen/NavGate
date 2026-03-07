@@ -1,5 +1,10 @@
 import fs from 'fs/promises'
 import path from 'path'
+import { fileURLToPath } from 'url'
+
+// Get __dirname in ES module
+const __filename = fileURLToPath(import.meta.url)
+const __dirname = path.dirname(__filename)
 
 // Simple JSON-file based storage used when STORAGE_DRIVER=json
 // The shape is intentionally close to the Prisma models so that
@@ -38,7 +43,7 @@ export interface NavData {
 }
 
 const dataFilePath =
-  process.env.JSON_DB_PATH || path.join(process.cwd(), 'apps', 'server', 'data', 'nav-data.json')
+  process.env.JSON_DB_PATH || path.join(__dirname, '..', '..', 'data', 'nav-data.json')
 
 async function ensureDataFile(): Promise<void> {
   try {
