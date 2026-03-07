@@ -1,0 +1,15 @@
+node_modules
+dist
+.git
+.gitignore
+*.log
+.env
+.DS_Store
+coverage
+*.md
+!.env.example
+.vscode
+.idea
+*.swp
+*.swo
+*~

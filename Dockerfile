@@ -1,36 +1,18 @@
-FROM node:20-alpine AS builder
+# 使用 Node.js 20 作为基础镜像
+FROM node:20-alpine
 
+# 设置工作目录
 WORKDIR /app
 
 # 安装 pnpm
 RUN npm install -g pnpm@10
 
-# 复制根目录的 package.json 和 pnpm-lock.yaml
-COPY package.json pnpm-lock.yaml ./
-COPY packages ./packages
+# 复制所有文件
+COPY . .
 
-# 复制前端和后端的 package.json
-COPY apps/frontend/package.json ./apps/frontend/package.json
-COPY apps/server/package.json ./apps/server/package.json
-
-# 复制前端源代码
-COPY apps/frontend/src ./apps/frontend/src
-COPY apps/frontend/index.html ./apps/frontend/index.html
-COPY apps/frontend/vite.config.ts ./apps/frontend/vite.config.ts
-COPY apps/frontend/tsconfig.json ./apps/frontend/tsconfig.json
-COPY apps/frontend/tsconfig.app.json ./apps/frontend/tsconfig.app.json
-COPY apps/frontend/src/vite-env.d.ts ./apps/frontend/src/vite-env.d.ts
-
-# 复制后端源代码
-COPY apps/server/src ./apps/server/src
-COPY apps/server/tsconfig.json ./apps/server/tsconfig.json
-
-# 安装依赖
+# 安装所有依赖
+ENV CI=true
 RUN pnpm install --frozen-lockfile --verbose
-
-# 检查依赖安装情况
-RUN ls -la node_modules
-RUN ls -la packages/
 
 # 构建前端
 WORKDIR /app/apps/frontend
@@ -38,24 +20,6 @@ RUN npx vite build
 
 # 构建后端（跳过TypeScript编译，使用tsx直接运行）
 WORKDIR /app/apps/server
-
-# 生产阶段
-FROM node:20-alpine
-
-WORKDIR /app
-
-# 安装 pnpm
-RUN npm install -g pnpm@10
-
-# 复制 package.json 并安装生产依赖
-COPY package.json pnpm-lock.yaml ./
-COPY packages ./packages
-COPY apps/server/package.json ./apps/server/package.json
-RUN pnpm install --frozen-lockfile --ignore-scripts
-
-# 复制构建产物和源代码
-COPY --from=builder /app/apps/frontend/dist ./apps/frontend/dist
-COPY --from=builder /app/apps/server/src ./apps/server/src
 
 # 安装 Nginx
 RUN apk add --no-cache nginx
