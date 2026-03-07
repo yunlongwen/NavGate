@@ -42,11 +42,11 @@ ENV AUTH_PASSWORD=${AUTH_PASSWORD}
 ENV JSON_DB_PATH=/app/data/nav-data.json
 
 # 暴露端口
-EXPOSE 80
+EXPOSE 3456
 
 # 健康检查
 HEALTHCHECK --interval=30s --timeout=3s --start-period=5s --retries=3 \
-  CMD node -e "require('http').get('http://localhost:80/health', (r) => {process.exit(r.statusCode === 200 ? 0 : 1)})"
+  CMD node -e "require('http').get('http://localhost:3456/health', (r) => {process.exit(r.statusCode === 200 ? 0 : 1)})"
 
 # 启动服务
 CMD ["/app/start.sh"]
