@@ -43,6 +43,24 @@ function App() {
 
   const isAdmin = !!authToken
 
+  const loadData = useCallback(async () => {
+    try {
+      setLoading(true)
+      const [groupsData, sitesData, configData] = await Promise.all([
+        getGroups(isAdmin),
+        getSites(undefined, isAdmin),
+        getConfig(),
+      ])
+      setGroups(groupsData)
+      setSites(sitesData)
+      setConfig(configData)
+    } catch (error) {
+      console.error('Failed to load data:', error)
+    } finally {
+      setLoading(false)
+    }
+  }, [isAdmin])
+
   const siteCountByGroup = useMemo(() => {
     const counts: Record<number, number> = {}
     sites.forEach(s => {
@@ -96,7 +114,7 @@ function App() {
 
   useEffect(() => {
     loadData()
-  }, [])
+  }, [loadData])
 
   useEffect(() => {
     localStorage.setItem(DARK_MODE_KEY, JSON.stringify(darkMode))
@@ -113,24 +131,6 @@ function App() {
     document.addEventListener('keydown', handleKeyDown)
     return () => document.removeEventListener('keydown', handleKeyDown)
   }, [])
-
-  const loadData = async () => {
-    try {
-      setLoading(true)
-      const [groupsData, sitesData, configData] = await Promise.all([
-        getGroups(isAdmin),
-        getSites(undefined, isAdmin),
-        getConfig(),
-      ])
-      setGroups(groupsData)
-      setSites(sitesData)
-      setConfig(configData)
-    } catch (error) {
-      console.error('Failed to load data:', error)
-    } finally {
-      setLoading(false)
-    }
-  }
 
   const handleLogin = (token: string) => {
     setAuthToken(token)
