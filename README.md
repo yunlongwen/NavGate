@@ -2,6 +2,16 @@
 
 现代化个人网站导航管理系统，支持多种部署模式：GitHub Pages（localStorage）、GitHub Gist 同步和 Docker 容器化部署。
 
+## 项目预览
+
+![搜索界面](resource/nav_search.png)
+
+![编辑界面](resource/nav_edit.png)
+
+![管理界面](resource/nav_admin.png)
+
+![数据同步](resource/gist_secrets.png)
+
 ## 项目特点
 
 - **多部署模式**：支持本地存储、GitHub Gist 同步和 Docker 后端部署
