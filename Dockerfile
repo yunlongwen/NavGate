@@ -20,7 +20,9 @@ RUN pnpm install --frozen-lockfile --ignore-scripts
 COPY apps/frontend/src ./apps/frontend/src
 COPY apps/frontend/index.html ./apps/frontend/index.html
 COPY apps/frontend/vite.config.ts ./apps/frontend/vite.config.ts
+COPY apps/frontend/tsconfig.json ./apps/frontend/tsconfig.json
 COPY apps/frontend/tsconfig.app.json ./apps/frontend/tsconfig.app.json
+COPY apps/frontend/src/vite-env.d.ts ./apps/frontend/src/vite-env.d.ts
 
 WORKDIR /app/apps/frontend
 RUN pnpm build
@@ -62,10 +64,13 @@ COPY docker/scripts/start.sh /app/start.sh
 RUN chmod +x /app/start.sh
 
 # 环境变量
+ARG AUTH_USERNAME=admin
+ARG AUTH_PASSWORD=admin123
+
 ENV NODE_ENV=production
 ENV PORT=3000
-ENV AUTH_USERNAME=${AUTH_USERNAME:-admin}
-ENV AUTH_PASSWORD=${AUTH_PASSWORD:-admin123}
+ENV AUTH_USERNAME=${AUTH_USERNAME}
+ENV AUTH_PASSWORD=${AUTH_PASSWORD}
 ENV JSON_DB_PATH=/app/data/nav-data.json
 
 # 暴露端口
