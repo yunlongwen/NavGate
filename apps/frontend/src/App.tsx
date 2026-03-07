@@ -8,6 +8,7 @@ import {
   CircularProgress,
 } from '@mui/material'
 import Header from './components/Header'
+import Footer from './components/Footer'
 import Navigation from './components/Navigation'
 import Sidebar from './components/Sidebar'
 import SearchDialog from './components/SearchDialog'
@@ -225,6 +226,8 @@ function App() {
             onDataChange={loadData}
           />
         </Container>
+
+        <Footer config={config} darkMode={darkMode} />
 
         <Sidebar
           open={showSidebar}
