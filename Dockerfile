@@ -16,6 +16,7 @@ RUN pnpm install --frozen-lockfile --verbose
 
 # 构建前端
 WORKDIR /app/apps/frontend
+ENV VITE_DEPLOY_MODE=backend
 RUN npx vite build
 
 # 构建后端（跳过TypeScript编译，使用tsx直接运行）
