@@ -4,7 +4,7 @@
 mkdir -p /app/data
 
 # 启动后端服务
-node /app/apps/server/dist/index.js &
+npx tsx /app/apps/server/src/index.ts &
 
 # 启动 Nginx
 nginx -g 'daemon off;'

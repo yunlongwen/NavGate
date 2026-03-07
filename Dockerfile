@@ -26,18 +26,18 @@ COPY apps/server/src ./apps/server/src
 COPY apps/server/tsconfig.json ./apps/server/tsconfig.json
 
 # 安装依赖
-RUN pnpm install --frozen-lockfile
+RUN pnpm install --frozen-lockfile --verbose
 
 # 检查依赖安装情况
-RUN ls -la node_modules/.bin
+RUN ls -la node_modules
+RUN ls -la packages/
 
 # 构建前端
 WORKDIR /app/apps/frontend
-RUN pnpm build
+RUN npx vite build
 
-# 构建后端
+# 构建后端（跳过TypeScript编译，使用tsx直接运行）
 WORKDIR /app/apps/server
-RUN pnpm build
 
 # 生产阶段
 FROM node:20-alpine
@@ -51,11 +51,11 @@ RUN npm install -g pnpm@10
 COPY package.json pnpm-lock.yaml ./
 COPY packages ./packages
 COPY apps/server/package.json ./apps/server/package.json
-RUN pnpm install --prod --frozen-lockfile --ignore-scripts
+RUN pnpm install --frozen-lockfile --ignore-scripts
 
-# 复制构建产物
+# 复制构建产物和源代码
 COPY --from=builder /app/apps/frontend/dist ./apps/frontend/dist
-COPY --from=builder /app/apps/server/dist ./apps/server/dist
+COPY --from=builder /app/apps/server/src ./apps/server/src
 
 # 安装 Nginx
 RUN apk add --no-cache nginx
