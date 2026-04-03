@@ -187,3 +187,51 @@ export async function updateConfig(config: Config): Promise<void> {
     throw new Error('Failed to update config')
   }
 }
+
+// ===== 数据导出/导入 =====
+
+export async function exportData(): Promise<string> {
+  const response = await fetch(`${API_BASE}/data/export`, {
+    headers: getAuthHeaders(),
+  })
+
+  if (!response.ok) {
+    throw new Error('Failed to export data')
+  }
+
+  const data = await response.json()
+  return JSON.stringify(data, null, 2)
+}
+
+export async function importData(jsonString: string): Promise<void> {
+  let data
+  try {
+    data = JSON.parse(jsonString)
+  } catch (error) {
+    throw new Error('无效的 JSON 数据格式')
+  }
+
+  const response = await fetch(`${API_BASE}/data/import`, {
+    method: 'POST',
+    headers: getAuthHeaders(),
+    body: JSON.stringify(data),
+  })
+
+  if (!response.ok) {
+    const error = await response.json()
+    throw new Error(error.error || '导入失败')
+  }
+}
+
+export async function clearData(): Promise<{ success: boolean; message: string }> {
+  const response = await fetch(`${API_BASE}/data/clear`, {
+    method: 'POST',
+    headers: getAuthHeaders(),
+  })
+
+  if (!response.ok) {
+    throw new Error('Failed to clear data')
+  }
+
+  return response.json()
+}
