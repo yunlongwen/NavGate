@@ -5,6 +5,7 @@ import authRoutes from './routes/auth'
 import groupsRoutes from './routes/groups'
 import sitesRoutes from './routes/sites'
 import configRoutes from './routes/config'
+import importRoutes from './routes/import'
 import { errorHandler } from './middleware/error'
 
 // 加载环境变量
@@ -29,6 +30,7 @@ app.use('/api/auth', authRoutes)
 app.use('/api/groups', groupsRoutes)
 app.use('/api/sites', sitesRoutes)
 app.use('/api/config', configRoutes)
+app.use('/api/data', importRoutes)
 
 // 健康检查
 app.get('/health', (req, res) => {
