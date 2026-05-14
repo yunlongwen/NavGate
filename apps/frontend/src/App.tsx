@@ -43,9 +43,9 @@ function App() {
 
   const isAdmin = !!authToken
 
-  const loadData = useCallback(async () => {
+  const loadData = useCallback(async (silent = false) => {
     try {
-      setLoading(true)
+      if (!silent) setLoading(true)
       const [groupsData, sitesData, configData] = await Promise.all([
         getGroups(isAdmin),
         getSites(undefined, isAdmin),
@@ -57,7 +57,7 @@ function App() {
     } catch (error) {
       console.error('Failed to load data:', error)
     } finally {
-      setLoading(false)
+      if (!silent) setLoading(false)
     }
   }, [isAdmin])
 
@@ -226,7 +226,7 @@ function App() {
               isAdmin={isAdmin}
               navigateToGroupId={navigateGroupId}
               onNavigateComplete={handleNavigateComplete}
-              onDataChange={loadData}
+              onDataChange={() => loadData(true)}
             />
           </Container>
         </Box>
@@ -261,7 +261,7 @@ function App() {
               open={showGroupManage}
               groups={groups}
               onClose={() => setShowGroupManage(false)}
-              onDataChange={loadData}
+              onDataChange={() => loadData(true)}
             />
             <ExportImportDialog
               open={showExportImport}
