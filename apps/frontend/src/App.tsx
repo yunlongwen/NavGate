@@ -43,23 +43,26 @@ function App() {
 
   const isAdmin = !!authToken
 
-  const loadData = useCallback(async (silent = false) => {
-    try {
-      if (!silent) setLoading(true)
-      const [groupsData, sitesData, configData] = await Promise.all([
-        getGroups(isAdmin),
-        getSites(undefined, isAdmin),
-        getConfig(),
-      ])
-      setGroups(groupsData)
-      setSites(sitesData)
-      setConfig(configData)
-    } catch (error) {
-      console.error('Failed to load data:', error)
-    } finally {
-      if (!silent) setLoading(false)
-    }
-  }, [isAdmin])
+  const loadData = useCallback(
+    async (silent = false) => {
+      try {
+        if (!silent) setLoading(true)
+        const [groupsData, sitesData, configData] = await Promise.all([
+          getGroups(isAdmin),
+          getSites(undefined, isAdmin),
+          getConfig(),
+        ])
+        setGroups(groupsData)
+        setSites(sitesData)
+        setConfig(configData)
+      } catch (error) {
+        console.error('Failed to load data:', error)
+      } finally {
+        if (!silent) setLoading(false)
+      }
+    },
+    [isAdmin]
+  )
 
   const siteCountByGroup = useMemo(() => {
     const counts: Record<number, number> = {}
