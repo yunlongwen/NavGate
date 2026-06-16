@@ -207,7 +207,7 @@ export async function importData(jsonString: string): Promise<void> {
   let data
   try {
     data = JSON.parse(jsonString)
-  } catch (error) {
+  } catch {
     throw new Error('无效的 JSON 数据格式')
   }
 
